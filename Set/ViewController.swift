@@ -142,22 +142,29 @@ class ViewController: UIViewController {
     
     func updateViewFromModel() {
         
-        for index in game.dealtCards.indices {
+        for index in cardButtons.indices {
             let button = cardButtons[index]
             
-            let attribtext = displayCard(game.dealtCards[index])
-            
-            button.setAttributedTitle(attribtext, for: UIControl.State.normal)
-            button.layer.borderColor = UIColor.blue.cgColor
-            button.layer.borderWidth = 0.0
-            button.layer.cornerRadius = 8.0
-            
-            if cardIsSelected[index] {
-                button.layer.borderWidth = 3.0
+            if index < game.dealtCards.endIndex {
+                let attribtext = displayCard(game.dealtCards[index])
+                
+                button.setAttributedTitle(attribtext, for: UIControl.State.normal)
+                button.layer.borderColor = UIColor.blue.cgColor
+                button.layer.borderWidth = 0.0
+                button.layer.cornerRadius = 8.0
+                
+                if cardIsSelected[index] {
+                    button.layer.borderWidth = 3.0
+                }
+                
+                if setPresent() {
+                    button.layer.borderColor = UIColor.red.cgColor
+                }
+
+                button.isHidden = false
             }
-            
-            if setPresent() {
-                button.layer.borderColor = UIColor.red.cgColor
+            else {
+                button.isHidden = true
             }
         }
     }
