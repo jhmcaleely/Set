@@ -31,7 +31,6 @@ class ViewController: UIViewController {
     }
     
     func displayCard(_ card: SetCard) -> NSAttributedString {
-        var attributes = [NSAttributedString.Key : Any]()
         var string: String
         var alpha: CGFloat
         var strokeWidth: Float
@@ -66,15 +65,15 @@ class ViewController: UIViewController {
         case .purple: color = UIColor.purple
         case .red: color = UIColor.red
         }
-        
-        attributes[.strokeWidth] = strokeWidth
-        attributes[.strokeColor] = color.withAlphaComponent(alpha)
-        attributes[.foregroundColor] = color.withAlphaComponent(alpha)
-        
+
+        let attributes: [NSAttributedString.Key : Any] = [
+            .strokeWidth: strokeWidth,
+            .strokeColor: color.withAlphaComponent(alpha),
+            .foregroundColor: color.withAlphaComponent(alpha)
+        ]
         let attribtext = NSAttributedString(string: string, attributes: attributes)
         
         return attribtext
-        
     }
     
     func startGame() {
