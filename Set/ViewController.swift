@@ -99,14 +99,14 @@ class ViewController: UIViewController {
             
             if cardIsSelected[touchedCard] {
                 cardIsSelected[touchedCard] = false
-                sender.layer.borderWidth = 0.0
                 selectedCards -= 1
             }
             else {
                 cardIsSelected[touchedCard] = true
-                sender.layer.borderWidth = 3.0
                 selectedCards += 1
             }
+            
+            updateViewFromModel()
         }
     }
     
@@ -124,7 +124,24 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    func setPresent() -> Bool {
+        var setPresent = false
+        
+        if selectedCards == 3 {
+            var selection = [SetCard]()
+            for index in 0..<cardIsSelected.count {
+                if cardIsSelected[index] {
+                    selection += [game.dealtCards[index]]
+                }
+            }
+            setPresent = game.isSet(cards: selection)
+        }
+        
+        return setPresent
+    }
+    
     func updateViewFromModel() {
+        
         for index in game.dealtCards.indices {
             let button = cardButtons[index]
             
@@ -134,7 +151,18 @@ class ViewController: UIViewController {
             button.layer.borderColor = UIColor.blue.cgColor
             button.layer.borderWidth = 0.0
             button.layer.cornerRadius = 8.0
+            
+            if cardIsSelected[index] {
+                button.layer.borderWidth = 3.0
+            }
+            
+            if setPresent() {
+                button.layer.borderColor = UIColor.red.cgColor
+            }
         }
     }
 }
+
+
+
 
