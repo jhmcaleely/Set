@@ -17,12 +17,14 @@ class ViewController: UIViewController {
     
     var cardIsSelected = [Bool]()
     var selectedCards: Int = 0
+    
+    lazy var game = SetGame()
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet var cardButtons: [UIButton]!
     
     func deselectAll() {
-        for index in cardButtons.indices {
+        for index in cardIsSelected.indices {
             let button = cardButtons[index]
             button.layer.borderWidth = 0.0
             cardIsSelected[index] = false
@@ -79,17 +81,12 @@ class ViewController: UIViewController {
     func startGame() {
         cardIsSelected = [Bool]()
         selectedCards = 0
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            
-            let attribtext = displayCard(SetCard(number: .three, symbol: .oval, shading: .open, color: .green))
-            
-            button.setAttributedTitle(attribtext, for: UIControl.State.normal)
-            button.layer.borderColor = UIColor.blue.cgColor
-            button.layer.borderWidth = 0.0
-            button.layer.cornerRadius = 8.0
+        game = SetGame()
+        game.dealSomeCards(number: 12)
+        for _ in game.dealtCards.indices {
             cardIsSelected += [false]
         }
+        updateViewFromModel()
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
@@ -118,6 +115,26 @@ class ViewController: UIViewController {
     }
     
     @IBAction func dealThree(_ sender: UIButton) {
+        if game.dealtCards.count < 24 {
+            game.dealSomeCards(number: 3)
+            for _ in 1...3 {
+                cardIsSelected += [false]
+            }
+        }
+        updateViewFromModel()
+    }
+    
+    func updateViewFromModel() {
+        for index in game.dealtCards.indices {
+            let button = cardButtons[index]
+            
+            let attribtext = displayCard(game.dealtCards[index])
+            
+            button.setAttributedTitle(attribtext, for: UIControl.State.normal)
+            button.layer.borderColor = UIColor.blue.cgColor
+            button.layer.borderWidth = 0.0
+            button.layer.cornerRadius = 8.0
+        }
     }
 }
 

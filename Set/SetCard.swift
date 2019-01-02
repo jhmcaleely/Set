@@ -10,25 +10,25 @@ import Foundation
 
 struct SetCard
 {
-    enum Number {
+    enum Number : CaseIterable {
         case one
         case two
         case three
     }
     
-    enum Symbol {
+    enum Symbol : CaseIterable {
         case diamond
         case squiggle
         case oval
     }
     
-    enum Shading {
+    enum Shading : CaseIterable {
         case solid
         case striped
         case open
     }
     
-    enum Color {
+    enum Color : CaseIterable {
         case red
         case green
         case purple
