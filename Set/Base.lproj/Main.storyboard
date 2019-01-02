@@ -48,7 +48,7 @@
                                 <rect key="frame" x="37" y="44" width="341" height="267"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="hK3-JP-Kwp">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="hK3-JP-Kwp">
                                         <rect key="frame" x="0.0" y="0.0" width="341" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pHO-vC-Tcm">
@@ -95,7 +95,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="B79-aM-qUn">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="B79-aM-qUn">
                                         <rect key="frame" x="0.0" y="79" width="341" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEG-ZG-Ogn">
@@ -142,7 +142,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="7dX-I7-UmN">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="7dX-I7-UmN">
                                         <rect key="frame" x="0.0" y="158" width="341" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A86-HL-RMx">
@@ -189,7 +189,7 @@
                                             </button>
                                         </subviews>
                                     </stackView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="hF8-59-zRT">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="13" translatesAutoresizingMaskIntoConstraints="NO" id="hF8-59-zRT">
                                         <rect key="frame" x="0.0" y="237" width="341" height="30"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="g5I-Uk-vYr">
