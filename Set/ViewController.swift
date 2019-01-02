@@ -195,6 +195,8 @@ class ViewController: UIViewController {
             }
             else {
                 button.isHidden = true
+                button.setTitle(nil, for: UIControl.State.normal)
+                button.setAttributedTitle(nil, for: UIControl.State.normal)
             }
         }
     }
