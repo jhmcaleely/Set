@@ -58,7 +58,7 @@ class ViewController: UIViewController {
             strokeWidth = -3.0
             alpha = 1.0
         case .striped:
-            strokeWidth = 3.0
+            strokeWidth = -3.0
             alpha = 0.15
         }
         
