@@ -100,17 +100,28 @@ class ViewController: UIViewController {
         
         if let touchedCard = cardButtons.index(of: sender) {
             
-            if selectedCards == 3 && !cardIsSelected[touchedCard] {
-                deselectAll()
-            }
-            
-            if cardIsSelected[touchedCard] {
-                cardIsSelected[touchedCard] = false
+            if setPresent() {
+                for index in cardIsSelected.indices.reversed() {
+                    if cardIsSelected[index] {
+                        game.dealtCards.remove(at: index)
+                        cardIsSelected[index] = false
+                    }
+                }
+                game.dealSomeCards(number: 3)
             }
             else {
-                cardIsSelected[touchedCard] = true
+                
+                if selectedCards == 3 && !cardIsSelected[touchedCard] {
+                    deselectAll()
+                }
+                
+                if cardIsSelected[touchedCard] {
+                    cardIsSelected[touchedCard] = false
+                }
+                else {
+                    cardIsSelected[touchedCard] = true
+                }
             }
-            
             updateViewFromModel()
         }
     }
