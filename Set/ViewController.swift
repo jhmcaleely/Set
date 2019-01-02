@@ -30,12 +30,62 @@ class ViewController: UIViewController {
         }
     }
     
+    func displayCard(_ card: SetCard) -> NSAttributedString {
+        var attributes = [NSAttributedString.Key : Any]()
+        var string: String
+        var alpha: CGFloat
+        var strokeWidth: Float
+        var color: UIColor
+        
+        switch card.symbol {
+        case .squiggle: string = "■"
+        case .diamond: string = "▲"
+        case .oval: string = "●"
+        }
+        
+        switch card.number {
+        case .one: break
+        case .two: string += string
+        case .three: string += string + string
+        }
+        
+        switch card.shading {
+        case .open:
+            strokeWidth = 3.0
+            alpha = 1.0
+        case .solid:
+            strokeWidth = -3.0
+            alpha = 1.0
+        case .striped:
+            strokeWidth = 3.0
+            alpha = 0.15
+        }
+        
+        switch card.color {
+        case .green: color = UIColor.green
+        case .purple: color = UIColor.purple
+        case .red: color = UIColor.red
+        }
+        
+        attributes[.strokeWidth] = strokeWidth
+        attributes[.strokeColor] = color.withAlphaComponent(alpha)
+        attributes[.foregroundColor] = color.withAlphaComponent(alpha)
+        
+        let attribtext = NSAttributedString(string: string, attributes: attributes)
+        
+        return attribtext
+        
+    }
+    
     func startGame() {
         cardIsSelected = [Bool]()
         selectedCards = 0
         for index in cardButtons.indices {
             let button = cardButtons[index]
-            button.setTitle("▲", for: UIControl.State.normal)
+            
+            let attribtext = displayCard(SetCard(number: .three, symbol: .oval, shading: .open, color: .green))
+            
+            button.setAttributedTitle(attribtext, for: UIControl.State.normal)
             button.layer.borderColor = UIColor.blue.cgColor
             button.layer.borderWidth = 0.0
             button.layer.cornerRadius = 8.0
