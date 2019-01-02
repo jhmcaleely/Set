@@ -34,6 +34,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet var cardButtons: [UIButton]!
+    @IBOutlet weak var dealButton: UIButton!
     
     func deselectAll() {
         for index in cardIsSelected.indices {
@@ -94,13 +95,7 @@ class ViewController: UIViewController {
         if let touchedCard = cardButtons.index(of: sender) {
             
             if setPresent() {
-                for index in cardIsSelected.indices.reversed() {
-                    if cardIsSelected[index] {
-                        game.dealtCards.remove(at: index)
-                        cardIsSelected[index] = false
-                    }
-                }
-                game.dealSomeCards(number: 3)
+                dealReplacementCards()
             }
             else {
                 
@@ -126,10 +121,23 @@ class ViewController: UIViewController {
     }
     
     @IBAction func dealThree(_ sender: UIButton) {
-        if game.dealtCards.count < ViewController.buttonCount {
+        if setPresent() {
+            dealReplacementCards()
+        }
+        else if game.dealtCards.count < ViewController.buttonCount {
             game.dealSomeCards(number: 3)
         }
         updateViewFromModel()
+    }
+    
+    func dealReplacementCards() {
+        for index in cardIsSelected.indices.reversed() {
+            if cardIsSelected[index] {
+                game.dealtCards.remove(at: index)
+                cardIsSelected[index] = false
+            }
+        }
+        game.dealSomeCards(number: 3)
     }
     
     func setPresent() -> Bool {
@@ -149,6 +157,20 @@ class ViewController: UIViewController {
     }
     
     func updateViewFromModel() {
+        
+        if setPresent() {
+            dealButton.setTitle("Deal 3 Replacement Cards", for: UIControl.State.normal)
+            dealButton.isEnabled = true
+        }
+        else {
+            dealButton.setTitle("Deal 3 Cards", for: UIControl.State.normal)
+            if game.dealtCards.count < 24 && game.cards.count > 0 {
+                dealButton.isEnabled = true
+            }
+            else {
+                dealButton.isEnabled = false
+            }
+        }
         
         for index in cardButtons.indices {
             let button = cardButtons[index]
