@@ -15,8 +15,20 @@ class ViewController: UIViewController {
         startGame()
     }
     
-    var cardIsSelected = [Bool]()
-    var selectedCards: Int = 0
+    static let buttonCount = 24
+    
+    var cardIsSelected = [Bool](repeating: false, count: buttonCount)
+    var selectedCards: Int {
+        get {
+            var selection = 0
+            for index in cardIsSelected.indices {
+                if cardIsSelected[index] {
+                    selection += 1
+                }
+            }
+            return selection
+        }
+    }
     
     lazy var game = SetGame()
 
@@ -28,7 +40,6 @@ class ViewController: UIViewController {
             let button = cardButtons[index]
             button.layer.borderWidth = 0.0
             cardIsSelected[index] = false
-            selectedCards = 0
         }
     }
     
@@ -79,13 +90,9 @@ class ViewController: UIViewController {
     }
     
     func startGame() {
-        cardIsSelected = [Bool]()
-        selectedCards = 0
+        cardIsSelected = [Bool](repeating: false, count: ViewController.buttonCount)
         game = SetGame()
         game.dealSomeCards(number: 12)
-        for _ in game.dealtCards.indices {
-            cardIsSelected += [false]
-        }
         updateViewFromModel()
     }
     
@@ -99,11 +106,9 @@ class ViewController: UIViewController {
             
             if cardIsSelected[touchedCard] {
                 cardIsSelected[touchedCard] = false
-                selectedCards -= 1
             }
             else {
                 cardIsSelected[touchedCard] = true
-                selectedCards += 1
             }
             
             updateViewFromModel()
@@ -115,11 +120,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func dealThree(_ sender: UIButton) {
-        if game.dealtCards.count < 24 {
+        if game.dealtCards.count < ViewController.buttonCount {
             game.dealSomeCards(number: 3)
-            for _ in 1...3 {
-                cardIsSelected += [false]
-            }
         }
         updateViewFromModel()
     }
