@@ -33,6 +33,38 @@ class SetGame
         }
     }
     
+    func isSet(cards: [SetCard]) -> Bool {
+        if cards.count == 3 {
+            if cards[0].number == cards[1].number && cards[1].number == cards[2].number
+            || (cards[0].number != cards[1].number && cards[0].number != cards[2].number
+                && cards[1].number != cards[2].number)
+            {
+                print("number set!")
+                if cards[0].symbol == cards[1].symbol && cards[1].symbol == cards[2].symbol
+                    || (cards[0].symbol != cards[1].symbol && cards[0].symbol != cards[2].symbol
+                        && cards[1].symbol != cards[2].symbol)
+                {
+                    print("symbol set!")
+                    if cards[0].shading == cards[1].shading && cards[1].shading == cards[2].shading
+                        || (cards[0].shading != cards[1].shading && cards[0].shading != cards[2].shading
+                            && cards[1].shading != cards[2].shading)
+                    {
+                        print("shading set!")
+                        if cards[0].color == cards[1].color && cards[1].color == cards[2].color
+                            || (cards[0].color != cards[1].color && cards[0].color != cards[2].color
+                                && cards[1].color != cards[2].color)
+                        {
+                            print("color set!")
+                            print("set!!")
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false
+    }
+    
     func dealSomeCards(number: Int) {
         for _ in 1...number {
             dealtCards += [cards.removeFirst()]
