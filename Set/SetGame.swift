@@ -71,8 +71,9 @@ class SetGame
         }
     }
     
-    init() {
+    init(initialDeal: Int) {
         createCards()
+        dealSomeCards(number: initialDeal)
     }
     
 }

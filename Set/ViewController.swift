@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        startGame()
+        updateViewFromModel()
     }
     
     static let buttonCount = 24
@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         }
     }
     
-    lazy var game = SetGame()
+    lazy var game = SetGame(initialDeal: 12)
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet var cardButtons: [UIButton]!
@@ -89,13 +89,6 @@ class ViewController: UIViewController {
         return attribtext
     }
     
-    func startGame() {
-        cardIsSelected = [Bool](repeating: false, count: ViewController.buttonCount)
-        game = SetGame()
-        game.dealSomeCards(number: 12)
-        updateViewFromModel()
-    }
-    
     @IBAction func touchCard(_ sender: UIButton) {
         
         if let touchedCard = cardButtons.index(of: sender) {
@@ -127,7 +120,9 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGame(_ sender: UIButton) {
-        startGame()
+        cardIsSelected = [Bool](repeating: false, count: ViewController.buttonCount)
+        game = SetGame(initialDeal: 12)
+        updateViewFromModel()
     }
     
     @IBAction func dealThree(_ sender: UIButton) {
