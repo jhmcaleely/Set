@@ -66,7 +66,7 @@ class SetGame
     }
     
     func dealSomeCards(number: Int) {
-        for _ in 1...number {
+        for _ in 0..<min(number, cards.count) {
             dealtCards += [cards.removeFirst()]
         }
     }
