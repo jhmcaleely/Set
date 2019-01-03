@@ -74,12 +74,7 @@ class ViewController: UIViewController {
                     deselectAll()
                 }
                 
-                if cardIsSelected[touchedCard] {
-                    cardIsSelected[touchedCard] = false
-                }
-                else {
-                    cardIsSelected[touchedCard] = true
-                }
+                cardIsSelected[touchedCard] = !cardIsSelected[touchedCard]
             }
             updateViewFromModel()
         }
