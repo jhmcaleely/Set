@@ -27,37 +27,47 @@ class SetGame
         
         cards.shuffle()
     }
+
+    func isSetMember<T: Equatable>(_ values: [T]) -> Bool {
+        return values.count == 3
+        && values[0] == values[1] && values[1] == values[2]
+        || (values[0] != values[1] && values[0] != values[2] && values[1] != values[2])
+    }
     
-    func isSet(cards: [SetCard]) -> Bool {
-        if cards.count == 3 {
-            if cards[0].number == cards[1].number && cards[1].number == cards[2].number
-            || (cards[0].number != cards[1].number && cards[0].number != cards[2].number
-                && cards[1].number != cards[2].number)
-            {
-                print("number set!")
-                if cards[0].symbol == cards[1].symbol && cards[1].symbol == cards[2].symbol
-                    || (cards[0].symbol != cards[1].symbol && cards[0].symbol != cards[2].symbol
-                        && cards[1].symbol != cards[2].symbol)
-                {
-                    print("symbol set!")
-                    if cards[0].shading == cards[1].shading && cards[1].shading == cards[2].shading
-                        || (cards[0].shading != cards[1].shading && cards[0].shading != cards[2].shading
-                            && cards[1].shading != cards[2].shading)
-                    {
-                        print("shading set!")
-                        if cards[0].color == cards[1].color && cards[1].color == cards[2].color
-                            || (cards[0].color != cards[1].color && cards[0].color != cards[2].color
-                                && cards[1].color != cards[2].color)
-                        {
-                            print("color set!")
-                            print("set!!")
-                            return true;
-                        }
-                    }
-                }
-            }
+    func isNumberSet(_ cards: [SetCard]) -> Bool {
+        var values = [SetCard.Number]()
+        for index in cards.indices {
+            values += [cards[index].number]
         }
-        return false
+        return isSetMember(values)
+    }
+
+    func isSymbolSet(_ cards: [SetCard]) -> Bool {
+        var values = [SetCard.Symbol]()
+        for index in cards.indices {
+            values += [cards[index].symbol]
+        }
+        return isSetMember(values)
+    }
+    
+    func isShadingSet(_ cards: [SetCard]) -> Bool {
+        var values = [SetCard.Shading]()
+        for index in cards.indices {
+            values += [cards[index].shading]
+        }
+        return isSetMember(values)
+    }
+    
+    func isColorSet(_ cards: [SetCard]) -> Bool {
+        var values = [SetCard.Color]()
+        for index in cards.indices {
+            values += [cards[index].color]
+        }
+        return isSetMember(values)
+    }
+
+    func isSet(cards: [SetCard]) -> Bool {
+        return isNumberSet(cards) && isSymbolSet(cards) && isShadingSet(cards) && isColorSet(cards)
     }
     
     func dealSomeCards(number: Int) {
