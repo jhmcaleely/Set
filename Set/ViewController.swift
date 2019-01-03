@@ -114,10 +114,11 @@ class ViewController: UIViewController {
                     button.layer.borderColor = UIColor.red.cgColor
                 }
 
-                button.isHidden = false
+                button.isEnabled = true
             }
             else {
-                button.isHidden = true
+                button.isEnabled = false
+                button.layer.borderWidth = 0.0
                 button.setTitle(nil, for: UIControl.State.normal)
                 button.setAttributedTitle(nil, for: UIControl.State.normal)
             }
