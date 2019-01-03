@@ -10,25 +10,10 @@ import Foundation
 
 class SetGame
 {
-    var cards = [SetCard]()
+    var gameDeck = [SetCard]()
     var dealtCards = [SetCard]()
     var selectedCards = [SetCard]()
     static let cardsInSet = 3
-
-    func createCards() {
-        
-        SetCard.Number.allCases.forEach { number in
-            SetCard.Symbol.allCases.forEach { symbol in
-                SetCard.Shading.allCases.forEach { shade in
-                    SetCard.Color.allCases.forEach { color in
-                        cards += [SetCard(number: number, symbol: symbol, shading: shade, color: color)]
-                    }
-                }
-            }
-        }
-        
-        cards.shuffle()
-    }
 
     func isSetMember<T: Equatable>(_ values: [T]) -> Bool {
         return values.count == SetGame.cardsInSet
@@ -92,8 +77,8 @@ class SetGame
     }
     
     func dealSomeCards(number: Int) {
-        for _ in 0..<min(number, cards.count) {
-            dealtCards += [cards.removeFirst()]
+        for _ in 0..<min(number, gameDeck.count) {
+            dealtCards += [gameDeck.removeFirst()]
         }
     }
     
@@ -108,7 +93,8 @@ class SetGame
     }
     
     init(initialDeal: Int) {
-        createCards()
+        gameDeck = SetCard.createDeck()
+        gameDeck.shuffle()
         dealSomeCards(number: initialDeal)
     }
     

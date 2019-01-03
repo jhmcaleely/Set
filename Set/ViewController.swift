@@ -87,7 +87,7 @@ class ViewController: UIViewController {
         }
         else {
             dealButton.setTitle("Deal 3 Cards", for: UIControl.State.normal)
-            if game.dealtCards.count < ViewController.buttonCount && game.cards.count > 0 {
+            if game.dealtCards.count < ViewController.buttonCount && game.gameDeck.count > 0 {
                 dealButton.isEnabled = true
             }
             else {
