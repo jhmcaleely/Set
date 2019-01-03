@@ -12,6 +12,8 @@ class SetGame
 {
     var cards = [SetCard]()
     var dealtCards = [SetCard]()
+    var selectedCards = [SetCard]()
+    static let cardsInSet = 3
 
     func createCards() {
         
@@ -29,7 +31,7 @@ class SetGame
     }
 
     func isSetMember<T: Equatable>(_ values: [T]) -> Bool {
-        return values.count == 3
+        return values.count == SetGame.cardsInSet
         && values[0] == values[1] && values[1] == values[2]
         || (values[0] != values[1] && values[0] != values[2] && values[1] != values[2])
     }
@@ -65,15 +67,44 @@ class SetGame
         }
         return isSetMember(values)
     }
-
-    func isSet(cards: [SetCard]) -> Bool {
-        return isNumberSet(cards) && isSymbolSet(cards) && isShadingSet(cards) && isColorSet(cards)
+    
+    func isSetSelected() -> Bool {
+        return selectedCards.count == SetGame.cardsInSet
+            && isNumberSet(selectedCards) && isSymbolSet(selectedCards) && isShadingSet(selectedCards) && isColorSet(selectedCards)
+    }
+    
+    func isCardSelected(_ card: SetCard) -> Bool {
+        return selectedCards.contains(card)
+    }
+    
+    func toggleCardSelection(_ card: SetCard) {
+        
+        if let i = selectedCards.firstIndex(of: card) {
+            selectedCards.remove(at: i)
+        }
+        else {
+            selectedCards += [card]
+        }
+    }
+    
+    func emptySelection() {
+        selectedCards.removeAll()
     }
     
     func dealSomeCards(number: Int) {
         for _ in 0..<min(number, cards.count) {
             dealtCards += [cards.removeFirst()]
         }
+    }
+    
+    func dealReplacementCards() {
+        for index in selectedCards.indices {
+            if let i = dealtCards.firstIndex(of: selectedCards[index]) {
+                dealtCards.remove(at: i)
+            }
+        }
+        dealSomeCards(number: selectedCards.count)
+        emptySelection()
     }
     
     init(initialDeal: Int) {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct SetCard
+struct SetCard: Equatable
 {
     enum Number : Int, CaseIterable {
         case one = 1, two, three
