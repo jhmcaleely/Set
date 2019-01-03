@@ -44,7 +44,7 @@ class ViewController: UIViewController {
         }
     }
     
-    func titleForCard(_ card: SetCard) -> NSAttributedString {
+    static func titleForCard(_ card: SetCard) -> NSAttributedString {
         
         let symbols: [SetCard.Symbol : String] = [.squiggle: "■", .diamond: "▲", .oval: "●"]
         let alphas: [SetCard.Shading : CGFloat] = [.open: 1.0, .solid: 1.0, .striped: 0.15]
@@ -147,7 +147,7 @@ class ViewController: UIViewController {
             let button = cardButtons[index]
             
             if index < game.dealtCards.endIndex {
-                let attribtext = titleForCard(game.dealtCards[index])
+                let attribtext = ViewController.titleForCard(game.dealtCards[index])
                 
                 button.setAttributedTitle(attribtext, for: UIControl.State.normal)
                 button.layer.borderColor = UIColor.blue.cgColor
