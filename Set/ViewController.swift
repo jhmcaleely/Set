@@ -44,50 +44,21 @@ class ViewController: UIViewController {
         }
     }
     
-    func displayCard(_ card: SetCard) -> NSAttributedString {
-        var string: String
-        var alpha: CGFloat
-        var strokeWidth: Float
-        var color: UIColor
+    func titleForCard(_ card: SetCard) -> NSAttributedString {
         
-        switch card.symbol {
-        case .squiggle: string = "■"
-        case .diamond: string = "▲"
-        case .oval: string = "●"
-        }
-        
-        switch card.number {
-        case .one: break
-        case .two: string += string
-        case .three: string += string + string
-        }
-        
-        switch card.shading {
-        case .open:
-            strokeWidth = 3.0
-            alpha = 1.0
-        case .solid:
-            strokeWidth = -3.0
-            alpha = 1.0
-        case .striped:
-            strokeWidth = -3.0
-            alpha = 0.15
-        }
-        
-        switch card.color {
-        case .green: color = UIColor.green
-        case .purple: color = UIColor.purple
-        case .red: color = UIColor.red
-        }
+        let symbols: [SetCard.Symbol : String] = [.squiggle: "■", .diamond: "▲", .oval: "●"]
+        let alphas: [SetCard.Shading : CGFloat] = [.open: 1.0, .solid: 1.0, .striped: 0.15]
+        let strokeWidths: [SetCard.Shading : Float] = [.open: 3.0, .solid: -3.0, .striped: -3.0]
+        let colors: [SetCard.Color : UIColor] = [.green: UIColor.green, .purple: UIColor.purple, .red: UIColor.red]
 
+        let string = String(repeating: symbols[card.symbol]!, count: card.number.rawValue)
         let attributes: [NSAttributedString.Key : Any] = [
-            .strokeWidth: strokeWidth,
-            .strokeColor: color.withAlphaComponent(alpha),
-            .foregroundColor: color.withAlphaComponent(alpha)
+            .strokeWidth: strokeWidths[card.shading]!,
+            .strokeColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!),
+            .foregroundColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!)
         ]
-        let attribtext = NSAttributedString(string: string, attributes: attributes)
         
-        return attribtext
+        return NSAttributedString(string: string, attributes: attributes)
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
@@ -176,7 +147,7 @@ class ViewController: UIViewController {
             let button = cardButtons[index]
             
             if index < game.dealtCards.endIndex {
-                let attribtext = displayCard(game.dealtCards[index])
+                let attribtext = titleForCard(game.dealtCards[index])
                 
                 button.setAttributedTitle(attribtext, for: UIControl.State.normal)
                 button.layer.borderColor = UIColor.blue.cgColor
