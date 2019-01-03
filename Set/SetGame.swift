@@ -15,22 +15,17 @@ class SetGame
 
     func createCards() {
         
-        var cardsToUse = [SetCard]()
-        
         SetCard.Number.allCases.forEach { number in
             SetCard.Symbol.allCases.forEach { symbol in
                 SetCard.Shading.allCases.forEach { shade in
                     SetCard.Color.allCases.forEach { color in
-                        cardsToUse += [SetCard(number: number, symbol: symbol, shading: shade, color: color)]
+                        cards += [SetCard(number: number, symbol: symbol, shading: shade, color: color)]
                     }
                 }
             }
         }
         
-        for _ in 1...cardsToUse.count {
-            let randomIndex = Int(arc4random_uniform(UInt32(cardsToUse.count)))
-            cards += [cardsToUse.remove(at: randomIndex)]
-        }
+        cards.shuffle()
     }
     
     func isSet(cards: [SetCard]) -> Bool {
