@@ -66,7 +66,7 @@ class SetGame
     }
     
     init(initialDeal: Int) {
-        gameDeck = SetCard.createDeck()
+        gameDeck = SetCard.fullDeck
         gameDeck.shuffle()
         dealSomeCards(number: initialDeal)
     }

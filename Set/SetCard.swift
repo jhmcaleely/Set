@@ -10,18 +10,20 @@ import Foundation
 
 struct SetCard: Equatable
 {
-    static func createDeck() -> [SetCard] {
-        var cards = [SetCard]()
-        Number.allCases.forEach { number in
-            Symbol.allCases.forEach { symbol in
-                Shading.allCases.forEach { shade in
-                    Color.allCases.forEach { color in
-                        cards += [SetCard(number: number, symbol: symbol, shading: shade, color: color)]
+    static var fullDeck: [SetCard] {
+        get {
+            var cards = [SetCard]()
+            Number.allCases.forEach { number in
+                Symbol.allCases.forEach { symbol in
+                    Shading.allCases.forEach { shade in
+                        Color.allCases.forEach { color in
+                            cards += [SetCard(number: number, symbol: symbol, shading: shade, color: color)]
+                        }
                     }
                 }
             }
+            return cards
         }
-        return cards
     }
     
     enum Number : Int, CaseIterable {
