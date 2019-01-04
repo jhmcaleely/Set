@@ -92,7 +92,16 @@ class ViewController: UIViewController {
                 
                 button.setAttributedTitle(attribtext, for: UIControl.State.normal)
                 button.layer.borderWidth = game.isCardSelected(game.dealtCards[index]) ? 3.0 : 0.0
-                button.layer.borderColor = game.isSetSelected() ? UIColor.red.cgColor : UIColor.blue.cgColor
+                if game.isSetSelected() {
+                    button.layer.borderColor = UIColor.red.cgColor
+                }
+                else if game.selectedCards.count == ViewController.selectionCount {
+                    button.layer.borderColor = UIColor.darkGray.cgColor
+                }
+                else {
+                    button.layer.borderColor = UIColor.blue.cgColor
+                }
+                button.layer.backgroundColor = UIColor.lightGray.cgColor
 
                 button.isEnabled = true
             }
@@ -101,6 +110,7 @@ class ViewController: UIViewController {
 
                 button.setAttributedTitle(nil, for: UIControl.State.normal)
                 button.layer.borderWidth = 0.0
+                button.layer.backgroundColor = UIColor.white.cgColor
             }
         }
     }
