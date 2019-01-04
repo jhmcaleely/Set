@@ -74,7 +74,7 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    @IBAction func dealThree(_ sender: UIButton) {
+    @IBAction func dealCards(_ sender: UIButton) {
         if game.isSetSelected() {
             game.dealReplacementCards()
         }
@@ -91,7 +91,7 @@ class ViewController: UIViewController {
             dealButton.isEnabled = true
         }
         else {
-            dealButton.setTitle("Deal 3 Cards", for: UIControl.State.normal)
+            dealButton.setTitle("Deal 3 More Cards", for: UIControl.State.normal)
             if game.dealtCards.count < ViewController.buttonCount && game.gameDeck.count > 0 {
                 dealButton.isEnabled = true
             }

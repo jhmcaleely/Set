@@ -226,7 +226,7 @@
                                         <rect key="frame" x="0.0" y="28.5" width="182" height="30"/>
                                         <state key="normal" title="Deal 3 Replacement Cards"/>
                                         <connections>
-                                            <action selector="dealThree:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6D-Aq-yBI"/>
+                                            <action selector="dealCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6D-Aq-yBI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-eg-bgV">
