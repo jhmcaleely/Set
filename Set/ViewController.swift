@@ -41,7 +41,7 @@ class ViewController: UIViewController {
             }
             else {
                 
-                if game.selectedCards.count == ViewController.selectionCount && !game.isCardSelected(touchedCard) {
+                if game.selectedCards.count == ViewController.selectionCount {
                     game.emptySelection()
                 }
                 
