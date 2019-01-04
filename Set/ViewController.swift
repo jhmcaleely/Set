@@ -22,7 +22,7 @@ class ViewController: UIViewController {
     
     static let buttonCount = 24
     static let initialDealCount = 12
-    static let selectionSize = SetGame.cardsInSet
+    static let selectionCount = SetGame.cardsInSet
     
     lazy var game = SetGame(initialDeal: ViewController.initialDealCount)
 
@@ -58,7 +58,7 @@ class ViewController: UIViewController {
             }
             else {
                 
-                if game.selectedCards.count == ViewController.selectionSize && !game.isCardSelected(touchedCard) {
+                if game.selectedCards.count == ViewController.selectionCount && !game.isCardSelected(touchedCard) {
                     game.emptySelection()
                 }
                 
