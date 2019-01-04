@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina3_5" orientation="portrait">
+    <device id="retina5_9" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
@@ -16,11 +16,11 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lTO-np-Cch">
-                                <rect key="frame" x="2" y="20" width="316" height="264"/>
+                                <rect key="frame" x="29.666666666666657" y="44" width="316" height="264"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="hK3-JP-Kwp">
                                         <rect key="frame" x="0.0" y="0.0" width="316" height="60"/>
@@ -264,23 +264,23 @@
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="05M-Ql-pMa">
-                                <rect key="frame" x="69" y="383.5" width="182" height="96.5"/>
+                                <rect key="frame" x="96.666666666666686" y="681.66666666666663" width="182" height="96.333333333333371"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqb-mS-7cO">
-                                        <rect key="frame" x="49" y="0.0" width="84.5" height="20.5"/>
+                                        <rect key="frame" x="48.666666666666664" y="0.0" width="84.666666666666686" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHL-2k-42o">
-                                        <rect key="frame" x="0.0" y="28.5" width="182" height="30"/>
+                                        <rect key="frame" x="0.0" y="28.333333333333371" width="182" height="30"/>
                                         <state key="normal" title="Deal 3 Replacement Cards"/>
                                         <connections>
                                             <action selector="dealCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6D-Aq-yBI"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-eg-bgV">
-                                        <rect key="frame" x="53.5" y="66.5" width="75" height="30"/>
+                                        <rect key="frame" x="53.333333333333329" y="66.333333333333371" width="74.999999999999986" height="30"/>
                                         <state key="normal" title="New Game"/>
                                         <connections>
                                             <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9vx-hW-2Wu"/>
@@ -291,12 +291,46 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="05M-Ql-pMa" secondAttribute="bottom" id="TxD-Nu-FET"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="05M-Ql-pMa" secondAttribute="bottom" id="NaU-PE-EKM"/>
+                            <constraint firstItem="lTO-np-Cch" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Oj3-qr-2Fc"/>
+                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="QVe-lU-hz8"/>
                             <constraint firstItem="lTO-np-Cch" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="UTj-2O-EN1"/>
-                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="r6l-1R-TBC"/>
+                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XVd-n0-Wev"/>
+                            <constraint firstItem="lTO-np-Cch" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Y7t-Bq-bPo"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lTO-np-Cch" secondAttribute="bottom" id="YrP-v8-3FZ"/>
+                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="h4G-En-J4X"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lTO-np-Cch" secondAttribute="bottom" constant="129" id="kIe-CB-Vhr">
+                                <variation key="heightClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="05M-Ql-pMa" secondAttribute="trailing" id="lae-jV-3nA"/>
                             <constraint firstItem="lTO-np-Cch" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xUH-q2-KUn"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="YrP-v8-3FZ"/>
+                                <exclude reference="kIe-CB-Vhr"/>
+                                <exclude reference="lae-jV-3nA"/>
+                                <exclude reference="Oj3-qr-2Fc"/>
+                                <exclude reference="Y7t-Bq-bPo"/>
+                                <exclude reference="QVe-lU-hz8"/>
+                                <exclude reference="h4G-En-J4X"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=compact">
+                            <mask key="constraints">
+                                <exclude reference="NaU-PE-EKM"/>
+                                <exclude reference="YrP-v8-3FZ"/>
+                                <exclude reference="kIe-CB-Vhr"/>
+                                <include reference="lae-jV-3nA"/>
+                                <include reference="Oj3-qr-2Fc"/>
+                                <exclude reference="UTj-2O-EN1"/>
+                                <include reference="Y7t-Bq-bPo"/>
+                                <exclude reference="QVe-lU-hz8"/>
+                                <exclude reference="XVd-n0-Wev"/>
+                                <include reference="h4G-En-J4X"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="dealButton" destination="xHL-2k-42o" id="fUg-i5-wua"/>
