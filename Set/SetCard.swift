@@ -8,6 +8,7 @@
 
 import Foundation
 
+// a card for the Set game. Each card has 4 facets: Number, Symbol, Shading & Color
 struct SetCard: Equatable
 {
     static var fullDeck: [SetCard] {
@@ -26,24 +27,24 @@ struct SetCard: Equatable
         }
     }
     
-    enum Number : Int, CaseIterable {
+    enum Number: Int, CaseIterable {
         case one = 1, two, three
     }
     
-    enum Symbol : CaseIterable {
+    enum Symbol: CaseIterable {
         case diamond, squiggle, oval
     }
     
-    enum Shading : CaseIterable {
+    enum Shading: CaseIterable {
         case solid, striped, open
     }
     
-    enum Color : CaseIterable {
+    enum Color: CaseIterable {
         case red, green, purple
     }
     
-    let number : Number
-    let symbol : Symbol
-    let shading : Shading
-    let color : Color
+    let number: Number
+    let symbol: Symbol
+    let shading: Shading
+    let color: Color
 }
