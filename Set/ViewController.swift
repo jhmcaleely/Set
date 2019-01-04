@@ -12,6 +12,11 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        cardButtons.forEach {
+            $0.layer.cornerRadius = 8.0
+            $0.setTitle(nil, for: UIControl.State.normal)
+        }
         updateViewFromModel()
     }
     
@@ -102,25 +107,16 @@ class ViewController: UIViewController {
                 let attribtext = ViewController.titleForCard(game.dealtCards[index])
                 
                 button.setAttributedTitle(attribtext, for: UIControl.State.normal)
-                button.layer.borderColor = UIColor.blue.cgColor
-                button.layer.borderWidth = 0.0
-                button.layer.cornerRadius = 8.0
-                
-                if game.isCardSelected(game.dealtCards[index]) {
-                    button.layer.borderWidth = 3.0
-                }
-                
-                if game.isSetSelected() {
-                    button.layer.borderColor = UIColor.red.cgColor
-                }
+                button.layer.borderWidth = game.isCardSelected(game.dealtCards[index]) ? 3.0 : 0.0
+                button.layer.borderColor = game.isSetSelected() ? UIColor.red.cgColor : UIColor.blue.cgColor
 
                 button.isEnabled = true
             }
             else {
                 button.isEnabled = false
-                button.layer.borderWidth = 0.0
-                button.setTitle(nil, for: UIControl.State.normal)
+
                 button.setAttributedTitle(nil, for: UIControl.State.normal)
+                button.layer.borderWidth = 0.0
             }
         }
     }
