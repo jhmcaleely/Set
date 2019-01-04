@@ -9,16 +9,6 @@
 import UIKit
 
 class ViewController: UIViewController {
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        cardButtons.forEach {
-            $0.layer.cornerRadius = 8.0
-            $0.setTitle(nil, for: UIControl.State.normal)
-        }
-        updateViewFromModel()
-    }
     
     static let buttonCount = 24
     static let initialDealCount = 12
@@ -30,21 +20,14 @@ class ViewController: UIViewController {
     @IBOutlet var cardButtons: [UIButton]!
     @IBOutlet weak var dealButton: UIButton!
     
-    static func titleForCard(_ card: SetCard) -> NSAttributedString {
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        let symbols: [SetCard.Symbol : String] = [.squiggle: "■", .diamond: "▲", .oval: "●"]
-        let alphas: [SetCard.Shading : CGFloat] = [.open: 1.0, .solid: 1.0, .striped: 0.15]
-        let strokeWidths: [SetCard.Shading : Float] = [.open: 3.0, .solid: -3.0, .striped: -3.0]
-        let colors: [SetCard.Color : UIColor] = [.green: UIColor.green, .purple: UIColor.purple, .red: UIColor.red]
-
-        let string = String(repeating: symbols[card.symbol]!, count: card.number.rawValue)
-        let attributes: [NSAttributedString.Key : Any] = [
-            .strokeWidth: strokeWidths[card.shading]!,
-            .strokeColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!),
-            .foregroundColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!)
-        ]
-        
-        return NSAttributedString(string: string, attributes: attributes)
+        cardButtons.forEach {
+            $0.layer.cornerRadius = 8.0
+            $0.setTitle(nil, for: UIControl.State.normal)
+        }
+        updateViewFromModel()
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
@@ -118,5 +101,22 @@ class ViewController: UIViewController {
                 button.layer.borderWidth = 0.0
             }
         }
+    }
+
+    static func titleForCard(_ card: SetCard) -> NSAttributedString {
+        
+        let symbols: [SetCard.Symbol : String] = [.squiggle: "■", .diamond: "▲", .oval: "●"]
+        let alphas: [SetCard.Shading : CGFloat] = [.open: 1.0, .solid: 1.0, .striped: 0.15]
+        let strokeWidths: [SetCard.Shading : Float] = [.open: 3.0, .solid: -3.0, .striped: -3.0]
+        let colors: [SetCard.Color : UIColor] = [.green: UIColor.green, .purple: UIColor.purple, .red: UIColor.red]
+        
+        let string = String(repeating: symbols[card.symbol]!, count: card.number.rawValue)
+        let attributes: [NSAttributedString.Key : Any] = [
+            .strokeWidth: strokeWidths[card.shading]!,
+            .strokeColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!),
+            .foregroundColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!)
+        ]
+        
+        return NSAttributedString(string: string, attributes: attributes)
     }
 }
