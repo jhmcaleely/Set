@@ -15,47 +15,20 @@ class SetGame
     var selectedCards = [SetCard]()
     static let cardsInSet = 3
 
-    func isSetMember<T: Equatable>(_ values: [T]) -> Bool {
-        return values.count == SetGame.cardsInSet
-        && values[0] == values[1] && values[1] == values[2]
-        || (values[0] != values[1] && values[0] != values[2] && values[1] != values[2])
-    }
-    
-    func isNumberSet(_ cards: [SetCard]) -> Bool {
-        var values = [SetCard.Number]()
-        for index in cards.indices {
-            values += [cards[index].number]
+    static func isFacetSet<T: Equatable>(_ cards: [SetCard], _ facet: (SetCard) -> T) -> Bool {
+        if cards.count == SetGame.cardsInSet {
+            let values = cards.map(facet)
+            return  values[0] == values[1] && values[1] == values[2]
+                || (values[0] != values[1] && values[0] != values[2] && values[1] != values[2])
         }
-        return isSetMember(values)
+        return false
     }
 
-    func isSymbolSet(_ cards: [SetCard]) -> Bool {
-        var values = [SetCard.Symbol]()
-        for index in cards.indices {
-            values += [cards[index].symbol]
-        }
-        return isSetMember(values)
-    }
-    
-    func isShadingSet(_ cards: [SetCard]) -> Bool {
-        var values = [SetCard.Shading]()
-        for index in cards.indices {
-            values += [cards[index].shading]
-        }
-        return isSetMember(values)
-    }
-    
-    func isColorSet(_ cards: [SetCard]) -> Bool {
-        var values = [SetCard.Color]()
-        for index in cards.indices {
-            values += [cards[index].color]
-        }
-        return isSetMember(values)
-    }
-    
     func isSetSelected() -> Bool {
-        return selectedCards.count == SetGame.cardsInSet
-            && isNumberSet(selectedCards) && isSymbolSet(selectedCards) && isShadingSet(selectedCards) && isColorSet(selectedCards)
+        return SetGame.isFacetSet(selectedCards, { $0.number })
+            && SetGame.isFacetSet(selectedCards, { $0.symbol })
+            && SetGame.isFacetSet(selectedCards, { $0.shading })
+            && SetGame.isFacetSet(selectedCards, { $0.color })
     }
     
     func isCardSelected(_ card: SetCard) -> Bool {
