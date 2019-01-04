@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     }
     
     static let buttonCount = 24
-    static let initialDealCount = ViewController.buttonCount / 2
+    static let initialDealCount = 12
     static let selectionSize = SetGame.cardsInSet
     
     lazy var game = SetGame(initialDeal: ViewController.initialDealCount)
