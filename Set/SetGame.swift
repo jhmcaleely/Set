@@ -8,6 +8,15 @@
 
 import Foundation
 
+extension Array
+where Element: Equatable {
+    mutating func removeFirst(of item: Element) {
+        if let i = firstIndex(of: item) {
+            remove(at: i)
+        }
+    }
+}
+
 class SetGame
 {
     var gameDeck = [SetCard]()
@@ -56,11 +65,7 @@ class SetGame
     }
     
     func dealReplacementCards() {
-        for index in selectedCards.indices {
-            if let i = dealtCards.firstIndex(of: selectedCards[index]) {
-                dealtCards.remove(at: i)
-            }
-        }
+        selectedCards.forEach { dealtCards.removeFirst(of: $0) }
         dealSomeCards(number: selectedCards.count)
         emptySelection()
     }
