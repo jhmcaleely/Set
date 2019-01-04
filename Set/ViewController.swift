@@ -106,7 +106,7 @@ class ViewController: UIViewController {
                 button.layer.borderWidth = 0.0
                 button.layer.cornerRadius = 8.0
                 
-                if game.selectedCards.contains(game.dealtCards[index]) {
+                if game.isCardSelected(game.dealtCards[index]) {
                     button.layer.borderWidth = 3.0
                 }
                 
