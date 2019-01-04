@@ -22,6 +22,7 @@ class SetGame
     var gameDeck = [SetCard]()
     var dealtCards = [SetCard]()
     var selectedCards = [SetCard]()
+    var score = 0
     static let cardsInSet = 3
 
     static func isFacetSet<T: Equatable>(_ cards: [SetCard], _ facet: (SetCard) -> T) -> Bool {
@@ -52,10 +53,22 @@ class SetGame
         else {
             selectedCards += [card]
         }
+        scoreSelection()
     }
     
     func emptySelection() {
         selectedCards.removeAll()
+    }
+    
+    func scoreSelection() {
+        if selectedCards.count == SetGame.cardsInSet {
+            if isSetSelected() {
+                score += 5
+            }
+            else {
+                score -= 3
+            }
+        }
     }
     
     func dealFreshCards(number: Int) {

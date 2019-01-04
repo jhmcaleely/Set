@@ -82,6 +82,8 @@ class ViewController: UIViewController {
             }
         }
         
+        scoreLabel.text = "Score: \(game.score)"
+        
         for index in cardButtons.indices {
             let button = cardButtons[index]
             
