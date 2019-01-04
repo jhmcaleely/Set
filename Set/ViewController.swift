@@ -69,7 +69,6 @@ class ViewController: UIViewController {
     }
     
     @IBAction func newGame(_ sender: UIButton) {
-        game.emptySelection()
         game = SetGame(initialDeal: ViewController.initialDealCount)
         updateViewFromModel()
     }
