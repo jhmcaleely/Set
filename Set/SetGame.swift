@@ -58,7 +58,7 @@ class SetGame
         selectedCards.removeAll()
     }
     
-    func dealSomeCards(number: Int) {
+    func dealFreshCards(number: Int) {
         for _ in 0..<min(number, gameDeck.count) {
             dealtCards += [gameDeck.removeFirst()]
         }
@@ -66,14 +66,14 @@ class SetGame
     
     func dealReplacementCards() {
         selectedCards.forEach { dealtCards.removeFirst(of: $0) }
-        dealSomeCards(number: selectedCards.count)
+        dealFreshCards(number: selectedCards.count)
         emptySelection()
     }
     
     init(initialDeal: Int) {
         gameDeck = SetCard.fullDeck
         gameDeck.shuffle()
-        dealSomeCards(number: initialDeal)
+        dealFreshCards(number: initialDeal)
     }
     
 }

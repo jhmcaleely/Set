@@ -79,7 +79,7 @@ class ViewController: UIViewController {
             game.dealReplacementCards()
         }
         else if game.dealtCards.count < ViewController.buttonCount {
-            game.dealSomeCards(number: 3)
+            game.dealFreshCards(number: 3)
         }
         updateViewFromModel()
     }
