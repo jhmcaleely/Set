@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     lazy var game = SetGame(initialDeal: ViewController.initialDealCount)
 
     @IBOutlet weak var scoreLabel: UILabel!
-    @IBOutlet var cardButtons: [UIButton]!
+    var cardButtons: [UIButton]!
     @IBOutlet weak var dealButton: UIButton!
     
     override func viewDidLoad() {
