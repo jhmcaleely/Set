@@ -17,38 +17,16 @@ class ViewController: UIViewController {
     lazy var game = SetGame(initialDeal: ViewController.initialDealCount)
 
     @IBOutlet weak var scoreLabel: UILabel!
-    var cardButtons: [UIButton]!
     @IBOutlet weak var dealButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        cardButtons.forEach {
-            $0.layer.cornerRadius = 8.0
-            $0.setTitle(nil, for: UIControl.State.normal)
-        }
         updateViewFromModel()
     }
     
     @IBAction func touchCard(_ sender: UIButton) {
-        
-        if let touchedIndex = cardButtons.index(of: sender) {
-            
-            let touchedCard = game.dealtCards[touchedIndex]
-            
-            if game.isSetSelected() {
-                game.dealReplacementCards()
-            }
-            else {
-                
-                if game.selectedCards.count == ViewController.selectionCount {
-                    game.emptySelection()
-                }
-                
-                game.toggleCardSelection(touchedCard)
-            }
-            updateViewFromModel()
-        }
+ 
     }
     
     @IBAction func newGame(_ sender: UIButton) {
@@ -83,36 +61,6 @@ class ViewController: UIViewController {
         }
         
         scoreLabel.text = "Score: \(game.score)"
-        
-        for index in cardButtons.indices {
-            let button = cardButtons[index]
-            
-            if index < game.dealtCards.endIndex {
-                let attribtext = ViewController.titleForCard(game.dealtCards[index])
-                
-                button.setAttributedTitle(attribtext, for: UIControl.State.normal)
-                button.layer.borderWidth = game.isCardSelected(game.dealtCards[index]) ? 3.0 : 0.0
-                if game.isSetSelected() {
-                    button.layer.borderColor = UIColor.red.cgColor
-                }
-                else if game.selectedCards.count == ViewController.selectionCount {
-                    button.layer.borderColor = UIColor.darkGray.cgColor
-                }
-                else {
-                    button.layer.borderColor = UIColor.blue.cgColor
-                }
-                button.layer.backgroundColor = UIColor.lightGray.cgColor
-
-                button.isEnabled = true
-            }
-            else {
-                button.isEnabled = false
-
-                button.setAttributedTitle(nil, for: UIControl.State.normal)
-                button.layer.borderWidth = 0.0
-                button.layer.backgroundColor = UIColor.white.cgColor
-            }
-        }
     }
 
     static func titleForCard(_ card: SetCard) -> NSAttributedString {
