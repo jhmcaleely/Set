@@ -46,18 +46,20 @@ class SetCardView: UIView {
     }
     
     func stripedRectPath(at origin: CGPoint) -> UIBezierPath {
+        
         let stripes = UIBezierPath()
         
         for cursor in 0...13 {
             stripes.addLine(to: CGPoint(x: 40, y: (cursor * 5) - 30))
             stripes.move(to: CGPoint(x: 0, y: cursor * 5))
         }
+        
         stripes.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
         return stripes
-
     }
     
     func diamondPath(at origin: CGPoint) -> UIBezierPath {
+        
         let diamond = UIBezierPath()
         diamond.move(to: CGPoint(x: 0, y: 15))
         diamond.addLine(to: CGPoint(x: 20, y: 5))
@@ -70,6 +72,7 @@ class SetCardView: UIView {
     }
     
     func lozengePath(at origin: CGPoint) -> UIBezierPath {
+        
         let lozenge = UIBezierPath()
         let radius = CGFloat(10.0)
         let length = CGFloat(20.0)
@@ -91,6 +94,7 @@ class SetCardView: UIView {
         squiggle.addCurve(to: CGPoint(x: 5, y: 20), controlPoint1: CGPoint(x: 25, y: 30), controlPoint2: CGPoint(x: 15, y: 10))
         squiggle.addCurve(to: CGPoint(x: 5, y: 10), controlPoint1: CGPoint(x: 0, y: 25), controlPoint2:
             CGPoint(x: 0, y: 15))
+        
         squiggle.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
         return squiggle
     }
