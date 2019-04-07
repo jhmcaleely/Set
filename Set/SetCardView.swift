@@ -21,35 +21,24 @@ class SetCardView: UIView {
         let squiggle = squigglePath(at: CGPoint(x: 5, y: 35))
         squiggle.lineWidth = 5.0
         
-        var stripes = stripedRectPath(at: CGPoint(x: 5, y: 5))
-        stripes.lineWidth = 2.5
-        
         UIColor.green.setFill()
         UIColor.red.setStroke()
-        diamond.stroke()
-        diamond.fill()
-        UIGraphicsGetCurrentContext()?.saveGState()
         
-        diamond.addClip()
-        stripes.stroke()
-        
-        UIGraphicsGetCurrentContext()?.restoreGState()
-        
-        UIGraphicsGetCurrentContext()?.saveGState()
-        lozenge.stroke()
-        lozenge.fill()
-        stripes = stripedRectPath(at: CGPoint(x: 5, y: 65))
-        lozenge.addClip()
-        stripes.lineWidth = 2.5
-        stripes.stroke()
-        UIGraphicsGetCurrentContext()?.restoreGState()
+        drawStripedSymbol(symbol: diamond, at: CGPoint(x: 5, y: 5))
+        drawStripedSymbol(symbol: squiggle, at: CGPoint(x: 5, y: 35))
+        drawStripedSymbol(symbol: lozenge, at: CGPoint(x: 5, y: 65))
 
+    }
+    
+    func drawStripedSymbol(symbol: UIBezierPath, at origin: CGPoint) {
+        
+        symbol.lineWidth = 5.0
+        let stripes = stripedRectPath(at: CGPoint(x: origin.x , y: origin.y))
         
         UIGraphicsGetCurrentContext()?.saveGState()
-        squiggle.stroke()
-        squiggle.fill()
-        stripes = stripedRectPath(at: CGPoint(x: 5, y: 35))
-        squiggle.addClip()
+        symbol.stroke()
+        symbol.fill()
+        symbol.addClip()
         stripes.lineWidth = 2.5
         stripes.stroke()
         UIGraphicsGetCurrentContext()?.restoreGState()
