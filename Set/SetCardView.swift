@@ -73,13 +73,13 @@ class SetCardView: UIView {
         
         for cursor in symbolPositions {
             if card.shading == SetCard.Shading.solid {
-                drawSolidSymbol(symbol: symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
+                drawSolidSymbol(symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
             }
             else if card.shading == SetCard.Shading.striped {
-                drawStripedSymbol(symbol: symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
+                drawStripedSymbol(symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
             }
             else {
-                drawOutlineSymbol(symbol: symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
+                drawOutlineSymbol(symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
             }
         }
     }
@@ -101,7 +101,7 @@ class SetCardView: UIView {
         }
     }
     
-    func drawOutlineSymbol(symbol: UIBezierPath, at origin: CGPoint) {
+    func drawOutlineSymbol(_ symbol: UIBezierPath, at origin: CGPoint) {
         let drawnSymbol = symbol.copy() as! UIBezierPath
         
         drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
@@ -109,13 +109,13 @@ class SetCardView: UIView {
         drawnSymbol.stroke()
     }
     
-    func drawSolidSymbol(symbol: UIBezierPath, at origin: CGPoint) {
+    func drawSolidSymbol(_ symbol: UIBezierPath, at origin: CGPoint) {
         let drawnSymbol = symbol.copy() as! UIBezierPath
         drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
         drawnSymbol.fill()
     }
     
-    func drawStripedSymbol(symbol: UIBezierPath, at origin: CGPoint) {
+    func drawStripedSymbol(_ symbol: UIBezierPath, at origin: CGPoint) {
         
         let drawnSymbol = symbol.copy() as! UIBezierPath
         drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
