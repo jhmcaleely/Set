@@ -12,37 +12,71 @@ class SetCardView: UIView {
 
     override func draw(_ rect: CGRect) {
 
-        let diamond = diamondPath(at: CGPoint(x: 5, y: 5))
-        diamond.lineWidth = 5.0
+        let diamond = diamondPath(at: CGPoint.zero)
+        let lozenge = lozengePath(at: CGPoint.zero)
+        let squiggle = squigglePath(at: CGPoint.zero)
         
-        let lozenge = lozengePath(at: CGPoint(x: 5, y: 65))
-        lozenge.lineWidth = 5.0
-        
-        let squiggle = squigglePath(at: CGPoint(x: 5, y: 35))
-        squiggle.lineWidth = 5.0
-        
-        UIColor.green.setFill()
+        UIColor.red.setFill()
         UIColor.red.setStroke()
         
-        drawStripedSymbol(symbol: diamond, at: CGPoint(x: 5, y: 5))
-        drawStripedSymbol(symbol: squiggle, at: CGPoint(x: 5, y: 35))
-        drawStripedSymbol(symbol: lozenge, at: CGPoint(x: 5, y: 65))
+ //       drawStripedSymbol(symbol: diamond, at: CGPoint(x: 5, y: 5))
+ //       drawStripedSymbol(symbol: squiggle, at: CGPoint(x: 5, y: 35))
+ //       drawStripedSymbol(symbol: lozenge, at: CGPoint(x: 5, y: 65))
+        
+        drawSolidSymbol(symbol: diamond, at: CGPoint(x: 50, y: 5))
+        drawSolidSymbol(symbol: squiggle, at: CGPoint(x: 50, y: 35))
+        drawSolidSymbol(symbol: lozenge, at: CGPoint(x: 50, y: 65))
+        
+        drawOutlineSymbol(symbol: diamond, at: CGPoint(x: 100, y: 5))
+        drawOutlineSymbol(symbol: squiggle, at: CGPoint(x: 100, y: 35))
+        drawOutlineSymbol(symbol: lozenge, at: CGPoint(x: 100, y: 65))
+        
+        drawCard()
+    }
+    
+    func drawCard() {
+        let card = UIBezierPath(roundedRect: CGRect(origin: CGPoint.zero, size: CGSize(width: 40, height: 56)), cornerRadius: 2)
+        
+        let diamond = squigglePath(at: CGPoint.zero)
+        diamond.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
+        
+        drawStripedSymbol(symbol: diamond, at: CGPoint(x: 8, y: 1))
+        drawStripedSymbol(symbol: diamond, at: CGPoint(x: 8, y: 19))
+        drawStripedSymbol(symbol: diamond, at: CGPoint(x: 8, y: 37))
 
+        card.lineWidth = 1
+        card.stroke()
+    }
+    
+    func drawOutlineSymbol(symbol: UIBezierPath, at origin: CGPoint) {
+        let drawnSymbol = symbol.copy() as! UIBezierPath
+        
+        drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
+        drawnSymbol.lineWidth = 2.5
+        drawnSymbol.stroke()
+    }
+    
+    func drawSolidSymbol(symbol: UIBezierPath, at origin: CGPoint) {
+        let drawnSymbol = symbol.copy() as! UIBezierPath
+        drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
+        drawnSymbol.fill()
     }
     
     func drawStripedSymbol(symbol: UIBezierPath, at origin: CGPoint) {
         
-        symbol.lineWidth = 5.0
+        let drawnSymbol = symbol.copy() as! UIBezierPath
+        drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
+        drawnSymbol.lineWidth = 1.5
         let stripes = stripedRectPath(at: CGPoint(x: origin.x , y: origin.y))
         
-        UIGraphicsGetCurrentContext()?.saveGState()
-        symbol.stroke()
-        symbol.fill()
-        symbol.addClip()
-        stripes.lineWidth = 2.5
-        stripes.stroke()
-        UIGraphicsGetCurrentContext()?.restoreGState()
-
+        if let context = UIGraphicsGetCurrentContext() {
+            context.saveGState()
+            drawnSymbol.stroke()
+            drawnSymbol.addClip()
+            stripes.lineWidth = 2.5
+            stripes.stroke()
+            context.restoreGState()
+        }
     }
     
     func stripedRectPath(at origin: CGPoint) -> UIBezierPath {
