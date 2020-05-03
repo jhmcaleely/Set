@@ -11,26 +11,63 @@ import UIKit
 class SetCardView: UIView {
 
     override func draw(_ rect: CGRect) {
+        let origin = CGPoint(x: 5, y: 5)
+        
         drawCard(SetCard(number: SetCard.Number.three,
                          symbol: SetCard.Symbol.diamond,
+                         shading: SetCard.Shading.striped,
+                         color: SetCard.Color.purple),
+                 at: origin)
+        
+        drawCard(SetCard(number: SetCard.Number.three,
+                         symbol: SetCard.Symbol.oval,
                          shading: SetCard.Shading.solid,
+                         color: SetCard.Color.green),
+                 at: origin.applying(CGAffineTransform(translationX: 50, y: 0)))
+        
+        drawCard(SetCard(number: SetCard.Number.three,
+                         symbol: SetCard.Symbol.squiggle,
+                         shading: SetCard.Shading.open,
                          color: SetCard.Color.red),
-                 at: CGPoint(x: 5, y: 5))
+                 at: origin.applying(CGAffineTransform(translationX: 100, y: 0)))
+        
     }
     
     func drawCard(_ card: SetCard, at origin: CGPoint) {
-        UIColor.red.setFill()
-        UIColor.red.setStroke()
-        drawSolidCard(at: origin)
         
-        // actually draws three cards for now.
-        drawOutlineCard(at: origin.applying(CGAffineTransform(translationX: 50, y: 0)))
-        drawStripedCard(at: origin.applying(CGAffineTransform(translationX: 100, y: 0)))
+        var color = UIColor.red
+        if card.color == SetCard.Color.green {
+            color = UIColor.green
+        }
+        else if card.color == SetCard.Color.purple {
+            color = UIColor.purple
+        }
+        
+        var symbol = diamondPath(at: CGPoint.zero)
+        if card.symbol == SetCard.Symbol.squiggle {
+            symbol = squigglePath(at: CGPoint.zero)
+        }
+        else if card.symbol == SetCard.Symbol.oval {
+            symbol = lozengePath(at: CGPoint.zero)
+        }
+        
+        symbol.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
+        color.setFill()
+        color.setStroke()
+        
+        if card.shading == SetCard.Shading.solid {
+            drawSolidCard(symbol, at: origin)
+        }
+        else if card.shading == SetCard.Shading.striped {
+            drawStripedCard(symbol, at: origin)
+        }
+        else {
+            drawOutlineCard(symbol, at: origin)
+        }
     }
 
-    func drawOutlineCard(at origin: CGPoint) {
-        let symbol = lozengePath(at: CGPoint.zero)
-        symbol.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
+    func drawOutlineCard(_ symbol: UIBezierPath, at origin: CGPoint) {
+        drawCardOutline(at: origin)
         
         let symbol1Position = CGPoint(x: 8, y: 1)
         let symbol2Position = CGPoint(x: 8, y: 19)
@@ -39,14 +76,11 @@ class SetCardView: UIView {
         drawOutlineSymbol(symbol: symbol, at: symbol1Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
         drawOutlineSymbol(symbol: symbol, at: symbol2Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
         drawOutlineSymbol(symbol: symbol, at: symbol3Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
-
-        drawCardOutline(at: origin)
     }
 
-    func drawSolidCard(at origin: CGPoint) {
-        let symbol = diamondPath(at: CGPoint.zero)
-        symbol.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
-        
+    func drawSolidCard(_ symbol: UIBezierPath, at origin: CGPoint) {
+        drawCardOutline(at: origin)
+
         let symbol1Position = CGPoint(x: 8, y: 1)
         let symbol2Position = CGPoint(x: 8, y: 19)
         let symbol3Position = CGPoint(x: 8, y: 37)
@@ -54,30 +88,35 @@ class SetCardView: UIView {
         drawSolidSymbol(symbol: symbol, at: symbol1Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
         drawSolidSymbol(symbol: symbol, at: symbol2Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
         drawSolidSymbol(symbol: symbol, at: symbol3Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
-
-        drawCardOutline(at: origin)
     }
     
-    func drawStripedCard(at origin: CGPoint) {
-        let symbol = squigglePath(at: CGPoint.zero)
-        symbol.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
+    func drawStripedCard(_ symbol: UIBezierPath, at origin: CGPoint) {
+        drawCardOutline(at: origin)
         
         let symbol1Position = CGPoint(x: 8, y: 1)
         let symbol2Position = CGPoint(x: 8, y: 19)
         let symbol3Position = CGPoint(x: 8, y: 37)
-        
+
         drawStripedSymbol(symbol: symbol, at: symbol1Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
         drawStripedSymbol(symbol: symbol, at: symbol2Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
         drawStripedSymbol(symbol: symbol, at: symbol3Position.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
-
-        drawCardOutline(at: origin)
     }
     
     func drawCardOutline(at origin: CGPoint) {
-        let card = UIBezierPath(roundedRect: CGRect(origin: CGPoint.zero, size: CGSize(width: 40, height: 56)), cornerRadius: 2)
-        card.lineWidth = 1.5
-        card.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        card.stroke()
+        
+        if let context = UIGraphicsGetCurrentContext() {
+            context.saveGState()
+
+            let card = UIBezierPath(roundedRect: CGRect(origin: CGPoint.zero, size: CGSize(width: 40, height: 56)), cornerRadius: 2)
+            card.lineWidth = 1.5
+            card.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
+            UIColor.darkGray.setStroke()
+            UIColor.lightGray.setFill()
+            card.stroke()
+            card.fill()
+            
+            context.restoreGState()
+        }
     }
     
     func drawOutlineSymbol(symbol: UIBezierPath, at origin: CGPoint) {
