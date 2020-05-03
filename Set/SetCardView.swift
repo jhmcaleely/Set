@@ -58,13 +58,16 @@ class SetCardView: UIView {
         drawCardOutline(at: origin)
         
         var symbolPositions = [CGPoint]()
-        if card.number.rawValue >= 1 {
-            symbolPositions.append(CGPoint(x: 8, y: 1))
-        }
-        if card.number.rawValue >= 2 {
+        if card.number.rawValue == 1 {
             symbolPositions.append(CGPoint(x: 8, y: 19))
         }
-        if card.number.rawValue >= 3 {
+        else if card.number.rawValue == 2 {
+            symbolPositions.append(CGPoint(x: 8, y: 10))
+            symbolPositions.append(CGPoint(x: 8, y: 29))
+        }
+        else if card.number.rawValue == 3 {
+            symbolPositions.append(CGPoint(x: 8, y: 1))
+            symbolPositions.append(CGPoint(x: 8, y: 19))
             symbolPositions.append(CGPoint(x: 8, y: 37))
         }
         
