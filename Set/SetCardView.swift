@@ -15,7 +15,7 @@ class SetCardView: UIView {
         
         drawCard(SetCard(number: SetCard.Number.three,
                          symbol: SetCard.Symbol.diamond,
-                         shading: SetCard.Shading.striped,
+                         shading: SetCard.Shading.open,
                          color: SetCard.Color.purple),
                  at: origin)
         
@@ -27,7 +27,7 @@ class SetCardView: UIView {
         
         drawCard(SetCard(number: SetCard.Number.one,
                          symbol: SetCard.Symbol.squiggle,
-                         shading: SetCard.Shading.open,
+                         shading: SetCard.Shading.striped,
                          color: SetCard.Color.red),
                  at: origin.applying(CGAffineTransform(translationX: 100, y: 0)))
         
@@ -35,22 +35,20 @@ class SetCardView: UIView {
     
     func drawCard(_ card: SetCard, at origin: CGPoint) {
         
-        var color = UIColor.red
-        if card.color == SetCard.Color.green {
-            color = UIColor.green
+        var color: UIColor
+        switch card.color {
+        case .red: color = UIColor.red
+        case .green: color = UIColor.green
+        case .purple: color = UIColor.purple
         }
-        else if card.color == SetCard.Color.purple {
-            color = UIColor.purple
+
+        var symbol: UIBezierPath
+        switch card.symbol {
+        case .diamond: symbol = diamondPath(at: CGPoint.zero)
+        case .oval: symbol = lozengePath(at: CGPoint.zero)
+        case .squiggle: symbol = squigglePath(at: CGPoint.zero)
         }
-        
-        var symbol = diamondPath(at: CGPoint.zero)
-        if card.symbol == SetCard.Symbol.squiggle {
-            symbol = squigglePath(at: CGPoint.zero)
-        }
-        else if card.symbol == SetCard.Symbol.oval {
-            symbol = lozengePath(at: CGPoint.zero)
-        }
-        
+                
         symbol.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
         color.setFill()
         color.setStroke()
@@ -72,14 +70,33 @@ class SetCardView: UIView {
         }
         
         for cursor in symbolPositions {
-            if card.shading == SetCard.Shading.solid {
-                drawSolidSymbol(symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
-            }
-            else if card.shading == SetCard.Shading.striped {
-                drawStripedSymbol(symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
-            }
-            else {
-                drawOutlineSymbol(symbol, at: cursor.applying(CGAffineTransform(translationX: origin.x, y: origin.y)))
+            let drawnSymbol = symbol.copy() as! UIBezierPath
+            drawnSymbol.apply(CGAffineTransform(translationX: cursor.x, y: cursor.y))
+            drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
+            
+            switch card.shading {
+            case .solid:
+                drawnSymbol.fill()
+            case .open:
+                drawnSymbol.lineWidth = 2.5
+                drawnSymbol.stroke()
+            case .striped:
+                drawnSymbol.lineWidth = 2
+                drawnSymbol.stroke()
+
+                if let context = UIGraphicsGetCurrentContext() {
+                    context.saveGState()
+                    drawnSymbol.addClip()
+                    
+                    let stripes = stripedRectPath(at: CGPoint(x: cursor.x,
+                                                              y: cursor.y)
+                        .applying(CGAffineTransform(translationX: origin.x,
+                                                    y: origin.y)))
+                    stripes.lineWidth = 2.5
+                    stripes.stroke()
+                    
+                    context.restoreGState()
+                }
             }
         }
     }
@@ -96,39 +113,6 @@ class SetCardView: UIView {
             UIColor.lightGray.setFill()
             card.stroke()
             card.fill()
-            
-            context.restoreGState()
-        }
-    }
-    
-    func drawOutlineSymbol(_ symbol: UIBezierPath, at origin: CGPoint) {
-        let drawnSymbol = symbol.copy() as! UIBezierPath
-        
-        drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        drawnSymbol.lineWidth = 2.5
-        drawnSymbol.stroke()
-    }
-    
-    func drawSolidSymbol(_ symbol: UIBezierPath, at origin: CGPoint) {
-        let drawnSymbol = symbol.copy() as! UIBezierPath
-        drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        drawnSymbol.fill()
-    }
-    
-    func drawStripedSymbol(_ symbol: UIBezierPath, at origin: CGPoint) {
-        
-        let drawnSymbol = symbol.copy() as! UIBezierPath
-        drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        drawnSymbol.lineWidth = 2
-        drawnSymbol.stroke()
-
-        if let context = UIGraphicsGetCurrentContext() {
-            context.saveGState()
-            drawnSymbol.addClip()
-            
-            let stripes = stripedRectPath(at: CGPoint(x: origin.x , y: origin.y))
-            stripes.lineWidth = 2.5
-            stripes.stroke()
             
             context.restoreGState()
         }
