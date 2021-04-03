@@ -50,22 +50,16 @@ class SetCardView: UIView {
         }
         
         static func drawOutline(in rect: CGRect) {
-         
-            if let context = UIGraphicsGetCurrentContext() {
-                context.saveGState()
-                
-                let scale = rect.width / CardGeometry.size.width
-                let card = UIBezierPath(cgPath: CardGeometry.outlinePath)
-                card.apply(CGAffineTransform(scaleX: scale, y: scale))
-                card.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
-                card.lineWidth = 1.5 * scale
-                UIColor.darkGray.setStroke()
-                UIColor.lightGray.setFill()
-                card.stroke()
-                card.fill()
-
-                context.restoreGState()
-            }
+            
+            let scale = rect.width / CardGeometry.size.width
+            let card = UIBezierPath(cgPath: CardGeometry.outlinePath)
+            card.apply(CGAffineTransform(scaleX: scale, y: scale))
+            card.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
+            card.lineWidth = 1.5 * scale
+            UIColor.darkGray.setStroke()
+            UIColor.lightGray.setFill()
+            card.stroke()
+            card.fill()
         }
         
         static func drawSymbol(_ symbol: UIBezierPath, with shading: SetCard.Shading, scale: CGFloat) {
