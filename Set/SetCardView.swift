@@ -17,9 +17,11 @@ class SetCardView: UIView {
     }
     
     class Card {
-        static func draw(_ card: SetCard, at position: CGPoint) {
+        static func draw(_ card: SetCard, in rect: CGRect) {
             
-            drawOutline(at: position)
+            let scale = rect.width / CardGeometry.size.width
+
+            drawOutline(in: rect)
             
             var color: UIColor
             switch card.color {
@@ -39,40 +41,43 @@ class SetCardView: UIView {
                 case .oval: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.lozengePath)
                 case .squiggle: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.squigglePath)
                 }
-                symbol.apply(CGAffineTransform(translationX: position.x, y: position.y))
                 symbol.apply(CGAffineTransform(translationX: cursor.x, y: cursor.y))
-                
-                drawSymbol(symbol, with: card.shading)
+                symbol.apply(CGAffineTransform(scaleX: scale, y: scale))
+                symbol.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
+
+                drawSymbol(symbol, with: card.shading, scale: scale)
             }
         }
         
-        static func drawOutline(at position: CGPoint) {
-            
+        static func drawOutline(in rect: CGRect) {
+         
             if let context = UIGraphicsGetCurrentContext() {
                 context.saveGState()
                 
+                let scale = rect.width / CardGeometry.size.width
                 let card = UIBezierPath(cgPath: CardGeometry.outlinePath)
-                card.apply(CGAffineTransform(translationX: position.x, y: position.y))
-                card.lineWidth = 1.5
+                card.apply(CGAffineTransform(scaleX: scale, y: scale))
+                card.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
+                card.lineWidth = 1.5 * scale
                 UIColor.darkGray.setStroke()
                 UIColor.lightGray.setFill()
                 card.stroke()
                 card.fill()
-                
+
                 context.restoreGState()
             }
         }
         
-        static func drawSymbol(_ symbol: UIBezierPath, with shading: SetCard.Shading) {
+        static func drawSymbol(_ symbol: UIBezierPath, with shading: SetCard.Shading, scale: CGFloat) {
             switch shading {
             case .solid:
                 symbol.fill()
             case .open:
-                symbol.lineWidth = 2.5
+                symbol.lineWidth = 2.5 * scale
                 
                 symbol.stroke()
             case .striped:
-                symbol.lineWidth = 2
+                symbol.lineWidth = 2 * scale
                 
                 symbol.stroke()
                 
@@ -80,8 +85,9 @@ class SetCardView: UIView {
                     context.saveGState()
                     
                     let stripes = UIBezierPath(cgPath: CardGeometry.Symbol.stripesPath)
+                    stripes.apply(CGAffineTransform(scaleX: scale, y: scale))
                     stripes.apply(CGAffineTransform(translationX: symbol.bounds.origin.x, y: symbol.bounds.origin.y))
-                    stripes.lineWidth = 1
+                    stripes.lineWidth = 1 * scale
                     
                     symbol.addClip()
                     stripes.stroke()
