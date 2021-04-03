@@ -9,90 +9,75 @@
 import UIKit
 
 class SetCardView: UIView {
-
-    override func draw(_ rect: CGRect) {
-        let origin = CGPoint(x: 5, y: 5)
-        
-        drawCard(SetCard(number: SetCard.Number.three,
-                         symbol: SetCard.Symbol.diamond,
-                         shading: SetCard.Shading.open,
-                         color: SetCard.Color.purple),
-                 at: origin)
-        
-        drawCard(SetCard(number: SetCard.Number.two,
-                         symbol: SetCard.Symbol.oval,
-                         shading: SetCard.Shading.solid,
-                         color: SetCard.Color.green),
-                 at: origin.applying(CGAffineTransform(translationX: 50, y: 0)))
-        
-        drawCard(SetCard(number: SetCard.Number.one,
-                         symbol: SetCard.Symbol.squiggle,
-                         shading: SetCard.Shading.striped,
-                         color: SetCard.Color.red),
-                 at: origin.applying(CGAffineTransform(translationX: 100, y: 0)))
-        
-    }
     
-    func drawCard(_ card: SetCard, at origin: CGPoint) {
-        
-        var color: UIColor
-        switch card.color {
-        case .red: color = UIColor.red
-        case .green: color = UIColor.green
-        case .purple: color = UIColor.purple
-        }
-
-        var symbol: UIBezierPath
-        switch card.symbol {
-        case .diamond: symbol = diamondPath(at: CGPoint.zero)
-        case .oval: symbol = lozengePath(at: CGPoint.zero)
-        case .squiggle: symbol = squigglePath(at: CGPoint.zero)
-        }
-                
-        symbol.apply(CGAffineTransform(scaleX: 0.6, y: 0.6))
-        color.setFill()
-        color.setStroke()
-        
-        drawCardOutline(at: origin)
-        
-        var symbolPositions = [CGPoint]()
-        if card.number.rawValue == 1 {
-            symbolPositions.append(CGPoint(x: 8, y: 19))
-        }
-        else if card.number.rawValue == 2 {
-            symbolPositions.append(CGPoint(x: 8, y: 10))
-            symbolPositions.append(CGPoint(x: 8, y: 29))
-        }
-        else if card.number.rawValue == 3 {
-            symbolPositions.append(CGPoint(x: 8, y: 1))
-            symbolPositions.append(CGPoint(x: 8, y: 19))
-            symbolPositions.append(CGPoint(x: 8, y: 37))
-        }
-        
-        for cursor in symbolPositions {
-            let drawnSymbol = symbol.copy() as! UIBezierPath
-            drawnSymbol.apply(CGAffineTransform(translationX: cursor.x, y: cursor.y))
-            drawnSymbol.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
+    class Card {
+        static func draw(_ card: SetCard, at position: CGPoint) {
             
-            switch card.shading {
+            drawOutline(at: position)
+            
+            var color: UIColor
+            switch card.color {
+            case .red: color = UIColor.red
+            case .green: color = UIColor.green
+            case .purple: color = UIColor.purple
+            }
+            color.setFill()
+            color.setStroke()
+            
+            let symbolPositions = CardGeometry.getSymbolPositions(card.number.rawValue)
+            
+            for cursor in symbolPositions {
+                var symbol: UIBezierPath
+                switch card.symbol {
+                case .diamond: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.diamondPath)
+                case .oval: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.lozengePath)
+                case .squiggle: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.squigglePath)
+                }
+                symbol.apply(CGAffineTransform(translationX: position.x, y: position.y))
+                symbol.apply(CGAffineTransform(translationX: cursor.x, y: cursor.y))
+                
+                drawSymbol(symbol, with: card.shading)
+            }
+        }
+        
+        static func drawOutline(at position: CGPoint) {
+            
+            if let context = UIGraphicsGetCurrentContext() {
+                context.saveGState()
+                
+                let card = UIBezierPath(cgPath: CardGeometry.outlinePath)
+                card.apply(CGAffineTransform(translationX: position.x, y: position.y))
+                card.lineWidth = 1.5
+                UIColor.darkGray.setStroke()
+                UIColor.lightGray.setFill()
+                card.stroke()
+                card.fill()
+                
+                context.restoreGState()
+            }
+        }
+        
+        static func drawSymbol(_ symbol: UIBezierPath, with shading: SetCard.Shading) {
+            switch shading {
             case .solid:
-                drawnSymbol.fill()
+                symbol.fill()
             case .open:
-                drawnSymbol.lineWidth = 2.5
-                drawnSymbol.stroke()
+                symbol.lineWidth = 2.5
+                
+                symbol.stroke()
             case .striped:
-                drawnSymbol.lineWidth = 2
-                drawnSymbol.stroke()
-
+                symbol.lineWidth = 2
+                
+                symbol.stroke()
+                
                 if let context = UIGraphicsGetCurrentContext() {
                     context.saveGState()
-                    drawnSymbol.addClip()
                     
-                    let stripes = stripedRectPath(at: CGPoint(x: cursor.x,
-                                                              y: cursor.y)
-                        .applying(CGAffineTransform(translationX: origin.x,
-                                                    y: origin.y)))
-                    stripes.lineWidth = 2.5
+                    let stripes = UIBezierPath(cgPath: CardGeometry.Symbol.stripesPath)
+                    stripes.apply(CGAffineTransform(translationX: symbol.bounds.origin.x, y: symbol.bounds.origin.y))
+                    stripes.lineWidth = 1
+                    
+                    symbol.addClip()
                     stripes.stroke()
                     
                     context.restoreGState()
@@ -101,74 +86,54 @@ class SetCardView: UIView {
         }
     }
     
-    func drawCardOutline(at origin: CGPoint) {
+    override func draw(_ rect: CGRect) {
         
-        if let context = UIGraphicsGetCurrentContext() {
-            context.saveGState()
-
-            let card = UIBezierPath(roundedRect: CGRect(origin: CGPoint.zero, size: CGSize(width: 40, height: 56)), cornerRadius: 2)
-            card.lineWidth = 1.5
-            card.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-            UIColor.darkGray.setStroke()
-            UIColor.lightGray.setFill()
-            card.stroke()
-            card.fill()
-            
-            context.restoreGState()
-        }
-    }
-    
-    func stripedRectPath(at origin: CGPoint) -> UIBezierPath {
+        // draw a fixed set of cards, to enable design of drawing routines
         
-        let stripes = UIBezierPath()
+        let origin = CGPoint(x: 6, y: 6)
         
-        for cursor in 0...13 {
-            stripes.addLine(to: CGPoint(x: 40, y: (cursor * 5) - 30))
-            stripes.move(to: CGPoint(x: 0, y: cursor * 5))
-        }
+        Card.draw(SetCard(number: SetCard.Number.three,
+                          symbol: SetCard.Symbol.diamond,
+                          shading: SetCard.Shading.open,
+                          color: SetCard.Color.purple),
+                  at: origin)
         
-        stripes.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        return stripes
-    }
-    
-    func diamondPath(at origin: CGPoint) -> UIBezierPath {
+        Card.draw(SetCard(number: SetCard.Number.two,
+                          symbol: SetCard.Symbol.oval,
+                          shading: SetCard.Shading.solid,
+                          color: SetCard.Color.green),
+                  at: origin.applying(CGAffineTransform(translationX: 46, y: 0)))
         
-        let diamond = UIBezierPath()
-        diamond.move(to: CGPoint(x: 0, y: 15))
-        diamond.addLine(to: CGPoint(x: 20, y: 5))
-        diamond.addLine(to: CGPoint(x: 40 , y: 15))
-        diamond.addLine(to: CGPoint(x: 20, y: 25))
-        diamond.close()
+        Card.draw(SetCard(number: SetCard.Number.one,
+                          symbol: SetCard.Symbol.squiggle,
+                          shading: SetCard.Shading.striped,
+                          color: SetCard.Color.red),
+                  at: origin.applying(CGAffineTransform(translationX: 92, y: 0)))
         
-        diamond.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        return diamond
-    }
-    
-    func lozengePath(at origin: CGPoint) -> UIBezierPath {
+        Card.draw(SetCard(number: SetCard.Number.three,
+                          symbol: SetCard.Symbol.squiggle,
+                          shading: SetCard.Shading.striped,
+                          color: SetCard.Color.purple),
+                  at: origin.applying(CGAffineTransform(translationX: 0, y: 62)))
         
-        let lozenge = UIBezierPath()
-        let radius = CGFloat(10.0)
-        let length = CGFloat(20.0)
-        lozenge.move(to: CGPoint(x: radius + length, y: 5))
-        lozenge.addArc(withCenter: CGPoint(x: radius + length, y: 5 + radius), radius: radius, startAngle: 3*CGFloat.pi / 2, endAngle: CGFloat.pi / 2, clockwise: true)
-        lozenge.addLine(to: CGPoint(x: radius, y: (2 * radius) + 5))
-        lozenge.addArc(withCenter: CGPoint(x: radius, y: 5 + radius), radius: radius, startAngle: CGFloat.pi / 2, endAngle: 3*CGFloat.pi / 2, clockwise: true)
-        lozenge.close()
+        Card.draw(SetCard(number: SetCard.Number.two,
+                          symbol: SetCard.Symbol.squiggle,
+                          shading: SetCard.Shading.striped,
+                          color: SetCard.Color.red),
+                  at: origin.applying(CGAffineTransform(translationX: 46, y: 62)))
         
-        lozenge.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        return lozenge
-    }
-    
-    func squigglePath(at origin: CGPoint) -> UIBezierPath {
-        let squiggle = UIBezierPath()
-        squiggle.move(to: CGPoint(x: 5, y: 10))
-        squiggle.addCurve(to: CGPoint(x: 35, y: 10), controlPoint1: CGPoint(x: 15, y: 0), controlPoint2: CGPoint(x:25, y: 20))
-        squiggle.addCurve(to: CGPoint(x: 35, y: 20), controlPoint1: CGPoint(x: 40, y: 5), controlPoint2: CGPoint(x: 40, y: 15))
-        squiggle.addCurve(to: CGPoint(x: 5, y: 20), controlPoint1: CGPoint(x: 25, y: 30), controlPoint2: CGPoint(x: 15, y: 10))
-        squiggle.addCurve(to: CGPoint(x: 5, y: 10), controlPoint1: CGPoint(x: 0, y: 25), controlPoint2:
-            CGPoint(x: 0, y: 15))
+        Card.draw(SetCard(number: SetCard.Number.one,
+                          symbol: SetCard.Symbol.squiggle,
+                          shading: SetCard.Shading.striped,
+                          color: SetCard.Color.green),
+                  at: origin.applying(CGAffineTransform(translationX: 92, y: 62)))
         
-        squiggle.apply(CGAffineTransform(translationX: origin.x, y: origin.y))
-        return squiggle
+        Card.draw(SetCard(number: SetCard.Number.three,
+                          symbol: SetCard.Symbol.diamond,
+                          shading: SetCard.Shading.striped,
+                          color: SetCard.Color.green),
+                  at: origin.applying(CGAffineTransform(translationX: 0, y: 124)))
+        
+        
     }
 }
