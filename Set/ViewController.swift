@@ -10,7 +10,6 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    static let buttonCount = 24
     static let initialDealCount = 12
     static let selectionCount = SetGame.cardsInSet
     
@@ -38,9 +37,8 @@ class ViewController: UIViewController {
         if game.isSetSelected() {
             game.dealReplacementCards()
         }
-        else if game.dealtCards.count < ViewController.buttonCount {
-            game.dealFreshCards(number: 3)
-        }
+        game.dealFreshCards(number: 3)
+        
         updateViewFromModel()
     }
     
@@ -52,7 +50,7 @@ class ViewController: UIViewController {
         }
         else {
             dealButton.setTitle("Deal 3 More Cards", for: UIControl.State.normal)
-            if game.dealtCards.count < ViewController.buttonCount && game.gameDeck.count > 0 {
+            if game.gameDeck.count > 0 {
                 dealButton.isEnabled = true
             }
             else {
@@ -61,22 +59,5 @@ class ViewController: UIViewController {
         }
         
         scoreLabel.text = "Score: \(game.score)"
-    }
-
-    static func titleForCard(_ card: SetCard) -> NSAttributedString {
-        
-        let symbols: [SetCard.Symbol : String] = [.squiggle: "■", .diamond: "▲", .oval: "●"]
-        let alphas: [SetCard.Shading : CGFloat] = [.open: 1.0, .solid: 1.0, .striped: 0.15]
-        let strokeWidths: [SetCard.Shading : Float] = [.open: 3.0, .solid: -3.0, .striped: -3.0]
-        let colors: [SetCard.Color : UIColor] = [.green: UIColor.green, .purple: UIColor.purple, .red: UIColor.red]
-        
-        let string = String(repeating: symbols[card.symbol]!, count: card.number.rawValue)
-        let attributes: [NSAttributedString.Key : Any] = [
-            .strokeWidth: strokeWidths[card.shading]!,
-            .strokeColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!),
-            .foregroundColor: colors[card.color]!.withAlphaComponent(alphas[card.shading]!)
-        ]
-        
-        return NSAttributedString(string: string, attributes: attributes)
     }
 }
