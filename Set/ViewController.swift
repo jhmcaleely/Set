@@ -17,6 +17,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var dealButton: UIButton!
+    @IBOutlet weak var cards: SetCardView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,6 +44,8 @@ class ViewController: UIViewController {
     }
     
     func updateViewFromModel() {
+        
+        cards.displayCards = game.dealtCards
         
         if game.isSetSelected() {
             dealButton.setTitle("Deal 3 Replacement Cards", for: UIControl.State.normal)

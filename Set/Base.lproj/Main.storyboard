@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina5_9" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -32,19 +30,19 @@
                                 <rect key="frame" x="96.666666666666686" y="681.66666666666663" width="182" height="96.333333333333371"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqb-mS-7cO">
-                                        <rect key="frame" x="48.666666666666664" y="0.0" width="84.666666666666686" height="20.333333333333332"/>
+                                        <rect key="frame" x="48.999999999999986" y="0.0" width="84.000000000000014" height="20.333333333333332"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHL-2k-42o">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHL-2k-42o">
                                         <rect key="frame" x="0.0" y="28.333333333333371" width="182" height="30"/>
                                         <state key="normal" title="Deal 3 Replacement Cards"/>
                                         <connections>
                                             <action selector="dealCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6D-Aq-yBI"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-eg-bgV">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-eg-bgV">
                                         <rect key="frame" x="53.333333333333329" y="66.333333333333371" width="74.999999999999986" height="30"/>
                                         <state key="normal" title="New Game"/>
                                         <connections>
@@ -54,6 +52,7 @@
                                 </subviews>
                             </stackView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="lTO-np-Cch" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="29.670000000000002" id="MFe-vs-2pq"/>
@@ -73,7 +72,6 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="05M-Ql-pMa" secondAttribute="trailing" id="lae-jV-3nA"/>
                             <constraint firstItem="lTO-np-Cch" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xUH-q2-KUn"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="YrP-v8-3FZ"/>
@@ -101,6 +99,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="cards" destination="d6Y-Og-1OQ" id="O7P-OG-hVF"/>
                         <outlet property="dealButton" destination="xHL-2k-42o" id="fUg-i5-wua"/>
                         <outlet property="scoreLabel" destination="jqb-mS-7cO" id="fYI-cC-5j3"/>
                     </connections>

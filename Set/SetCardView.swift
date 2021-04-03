@@ -10,6 +10,12 @@ import UIKit
 
 class SetCardView: UIView {
     
+    var displayCards: [SetCard] = [SetCard]() {
+        didSet {
+            setNeedsDisplay()
+        }
+    }
+    
     class Card {
         static func draw(_ card: SetCard, at position: CGPoint) {
             
@@ -88,51 +94,14 @@ class SetCardView: UIView {
     
     override func draw(_ rect: CGRect) {
         
-        // draw a fixed set of cards, to enable design of drawing routines
+        var cardGrid = Grid(layout: Grid.Layout.aspectRatio(5 / 7), frame: bounds)
+        cardGrid.cellCount = displayCards.count
         
-        let origin = CGPoint(x: 6, y: 6)
-        
-        Card.draw(SetCard(number: SetCard.Number.three,
-                          symbol: SetCard.Symbol.diamond,
-                          shading: SetCard.Shading.open,
-                          color: SetCard.Color.purple),
-                  at: origin)
-        
-        Card.draw(SetCard(number: SetCard.Number.two,
-                          symbol: SetCard.Symbol.oval,
-                          shading: SetCard.Shading.solid,
-                          color: SetCard.Color.green),
-                  at: origin.applying(CGAffineTransform(translationX: 46, y: 0)))
-        
-        Card.draw(SetCard(number: SetCard.Number.one,
-                          symbol: SetCard.Symbol.squiggle,
-                          shading: SetCard.Shading.striped,
-                          color: SetCard.Color.red),
-                  at: origin.applying(CGAffineTransform(translationX: 92, y: 0)))
-        
-        Card.draw(SetCard(number: SetCard.Number.three,
-                          symbol: SetCard.Symbol.squiggle,
-                          shading: SetCard.Shading.striped,
-                          color: SetCard.Color.purple),
-                  at: origin.applying(CGAffineTransform(translationX: 0, y: 62)))
-        
-        Card.draw(SetCard(number: SetCard.Number.two,
-                          symbol: SetCard.Symbol.squiggle,
-                          shading: SetCard.Shading.striped,
-                          color: SetCard.Color.red),
-                  at: origin.applying(CGAffineTransform(translationX: 46, y: 62)))
-        
-        Card.draw(SetCard(number: SetCard.Number.one,
-                          symbol: SetCard.Symbol.squiggle,
-                          shading: SetCard.Shading.striped,
-                          color: SetCard.Color.green),
-                  at: origin.applying(CGAffineTransform(translationX: 92, y: 62)))
-        
-        Card.draw(SetCard(number: SetCard.Number.three,
-                          symbol: SetCard.Symbol.diamond,
-                          shading: SetCard.Shading.striped,
-                          color: SetCard.Color.green),
-                  at: origin.applying(CGAffineTransform(translationX: 0, y: 124)))
+        var x = 0
+        for card in displayCards {
+            Card.draw(card, in: cardGrid[x] ?? CGRect.zero)
+            x = x + 1
+        }
         
         
     }
