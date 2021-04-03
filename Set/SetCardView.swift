@@ -102,13 +102,12 @@ class SetCardView: UIView {
         
         var cardGrid = Grid(layout: Grid.Layout.aspectRatio(5 / 7), frame: bounds)
         cardGrid.cellCount = displayCards.count
-        
-        var x = 0
-        for card in displayCards {
-            Card.draw(card, in: cardGrid[x] ?? CGRect.zero)
-            x = x + 1
+
+        for card in 0..<displayCards.count {
+            let gridRect = cardGrid[card] ?? CGRect.zero
+            let cardRect = gridRect.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+            
+            Card.draw(displayCards[card], in: cardRect)
         }
-        
-        
     }
 }
