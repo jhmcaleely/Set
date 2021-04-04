@@ -50,8 +50,9 @@ class ViewController: UIViewController {
         if game.isSetSelected() {
             game.dealReplacementCards()
         }
-        game.dealFreshCards(number: 3)
-        
+        else {
+            game.dealFreshCards(number: 3)
+        }
         updateViewFromModel()
     }
     
