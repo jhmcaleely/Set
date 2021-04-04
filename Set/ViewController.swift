@@ -28,6 +28,11 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    @IBAction func handleRotation(_ sender: UIRotationGestureRecognizer) {
+        if sender.state == .ended {
+            playSurface.displayCards.shuffle()
+        }
+    }
     @IBAction func handleSwipe(_ sender: UISwipeGestureRecognizer) {
         if sender.state == .ended {
             game.dealFreshCards(number: 3)

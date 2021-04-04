@@ -27,6 +27,9 @@
                                         <constraints>
                                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="16U-aM-hs5"/>
                                         </constraints>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="sBN-fb-UYX" appends="YES" id="8sP-KS-7VU"/>
+                                        </connections>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="05M-Ql-pMa">
                                         <rect key="frame" x="0.0" y="324" width="414" height="494"/>
@@ -88,6 +91,11 @@
                         <action selector="handleSwipe:" destination="BYZ-38-t0r" id="OZq-aU-Y38"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <rotationGestureRecognizer rotation="29.999999999999996" id="sBN-fb-UYX">
+                    <connections>
+                        <action selector="handleRotation:" destination="BYZ-38-t0r" id="2Dl-F6-rg4"/>
+                    </connections>
+                </rotationGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="135.19999999999999" y="132.26600985221674"/>
         </scene>
