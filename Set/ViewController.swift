@@ -17,7 +17,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var dealButton: UIButton!
-    @IBOutlet weak var cards: SetCardView!
+    @IBOutlet weak var cards: PlayingSurface!
     
     override func viewDidLoad() {
         super.viewDidLoad()

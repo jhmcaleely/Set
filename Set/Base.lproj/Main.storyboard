@@ -20,7 +20,7 @@
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lTO-np-Cch">
                                 <rect key="frame" x="29.666666666666657" y="44" width="315.66666666666674" height="422"/>
                                 <subviews>
-                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d6Y-Og-1OQ" customClass="SetCardView" customModule="Set" customModuleProvider="target">
+                                    <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d6Y-Og-1OQ" customClass="PlayingSurface" customModule="Set" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="315.66666666666669" height="422"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </view>

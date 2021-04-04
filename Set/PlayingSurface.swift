@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetCardView: UIView {
+class PlayingSurface: UIView {
     
     var displayCards: [SetCard] = [SetCard]() {
         didSet {
