@@ -25,8 +25,12 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
-    @IBAction func touchCard(_ sender: UIButton) {
- 
+    @objc func handleTapCard(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            let cardview = sender.view as! CardView
+            game.toggleCardSelection(cardview.display)
+            updateViewFromModel()
+        }
     }
     
     @IBAction func newGame(_ sender: UIButton) {
@@ -44,8 +48,10 @@ class ViewController: UIViewController {
     }
     
     func updateViewFromModel() {
-        
-        cards.displayCards = game.dealtCards
+             
+        for card in game.dealtCards {
+            cards.addDisplayCard(card, target: self, action: #selector(handleTapCard(_:)))
+        }
         
         if game.isSetSelected() {
             dealButton.setTitle("Deal 3 Replacement Cards", for: UIControl.State.normal)
