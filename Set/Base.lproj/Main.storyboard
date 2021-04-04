@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
@@ -14,91 +14,64 @@
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="lTO-np-Cch">
-                                <rect key="frame" x="29.666666666666657" y="44" width="315.66666666666674" height="422"/>
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
                                 <subviews>
                                     <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="d6Y-Og-1OQ" customClass="PlayingSurface" customModule="Set" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="315.66666666666669" height="422"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="316"/>
+                                        <color key="backgroundColor" red="0.30840110780000002" green="0.5618229508" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="300" id="16U-aM-hs5"/>
+                                        </constraints>
                                     </view>
+                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="05M-Ql-pMa">
+                                        <rect key="frame" x="0.0" y="324" width="414" height="494"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqb-mS-7cO">
+                                                <rect key="frame" x="165" y="0.0" width="84" height="20.5"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHL-2k-42o">
+                                                <rect key="frame" x="116" y="28.5" width="182" height="427.5"/>
+                                                <state key="normal" title="Deal 3 Replacement Cards"/>
+                                                <connections>
+                                                    <action selector="dealCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6D-Aq-yBI"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-eg-bgV">
+                                                <rect key="frame" x="169.5" y="464" width="75" height="30"/>
+                                                <state key="normal" title="New Game"/>
+                                                <connections>
+                                                    <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9vx-hW-2Wu"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <variation key="widthClass=compact" axis="vertical"/>
+                                        <variation key="widthClass=regular" axis="horizontal"/>
+                                        <variation key="heightClass=compact-widthClass=compact" axis="horizontal"/>
+                                    </stackView>
                                 </subviews>
-                            </stackView>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="05M-Ql-pMa">
-                                <rect key="frame" x="96.666666666666686" y="681.66666666666663" width="182" height="96.333333333333371"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 000" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jqb-mS-7cO">
-                                        <rect key="frame" x="48.999999999999986" y="0.0" width="84.000000000000014" height="20.333333333333332"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <nil key="textColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xHL-2k-42o">
-                                        <rect key="frame" x="0.0" y="28.333333333333371" width="182" height="30"/>
-                                        <state key="normal" title="Deal 3 Replacement Cards"/>
-                                        <connections>
-                                            <action selector="dealCards:" destination="BYZ-38-t0r" eventType="touchUpInside" id="E6D-Aq-yBI"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TEX-eg-bgV">
-                                        <rect key="frame" x="53.333333333333329" y="66.333333333333371" width="74.999999999999986" height="30"/>
-                                        <state key="normal" title="New Game"/>
-                                        <connections>
-                                            <action selector="newGame:" destination="BYZ-38-t0r" eventType="touchUpInside" id="9vx-hW-2Wu"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="05M-Ql-pMa" firstAttribute="top" secondItem="d6Y-Og-1OQ" secondAttribute="bottom" constant="8" symbolic="YES" id="unM-tM-ugi"/>
+                                </constraints>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="lTO-np-Cch" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="29.670000000000002" id="MFe-vs-2pq"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="05M-Ql-pMa" secondAttribute="bottom" id="NaU-PE-EKM"/>
-                            <constraint firstItem="lTO-np-Cch" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Oj3-qr-2Fc"/>
-                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="QVe-lU-hz8"/>
-                            <constraint firstItem="lTO-np-Cch" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="UTj-2O-EN1"/>
-                            <constraint firstItem="lTO-np-Cch" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="X0H-lk-q2c"/>
-                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="XVd-n0-Wev"/>
-                            <constraint firstItem="lTO-np-Cch" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Y7t-Bq-bPo"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lTO-np-Cch" secondAttribute="bottom" id="YrP-v8-3FZ"/>
-                            <constraint firstItem="05M-Ql-pMa" firstAttribute="top" secondItem="lTO-np-Cch" secondAttribute="bottom" constant="215.66999999999999" id="eno-H3-oPd"/>
-                            <constraint firstItem="05M-Ql-pMa" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="h4G-En-J4X"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lTO-np-Cch" secondAttribute="bottom" constant="129" id="kIe-CB-Vhr">
-                                <variation key="heightClass=compact" constant="0.0"/>
-                            </constraint>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="05M-Ql-pMa" secondAttribute="trailing" id="lae-jV-3nA"/>
-                            <constraint firstItem="lTO-np-Cch" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="xUH-q2-KUn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="lTO-np-Cch" secondAttribute="top" id="QAs-ul-Sny"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="lTO-np-Cch" secondAttribute="bottom" id="Rib-oz-z8O"/>
+                            <constraint firstItem="lTO-np-Cch" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="XCp-ef-dqa"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lTO-np-Cch" secondAttribute="trailing" id="dLU-x1-hJU"/>
+                            <constraint firstItem="lTO-np-Cch" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="yBu-kv-xLD"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="YrP-v8-3FZ"/>
-                                <exclude reference="kIe-CB-Vhr"/>
-                                <exclude reference="lae-jV-3nA"/>
-                                <exclude reference="Oj3-qr-2Fc"/>
-                                <exclude reference="Y7t-Bq-bPo"/>
-                                <exclude reference="QVe-lU-hz8"/>
-                                <exclude reference="h4G-En-J4X"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=compact">
-                            <mask key="constraints">
-                                <exclude reference="NaU-PE-EKM"/>
-                                <exclude reference="YrP-v8-3FZ"/>
-                                <exclude reference="kIe-CB-Vhr"/>
-                                <include reference="lae-jV-3nA"/>
-                                <include reference="Oj3-qr-2Fc"/>
-                                <exclude reference="UTj-2O-EN1"/>
-                                <include reference="Y7t-Bq-bPo"/>
-                                <exclude reference="QVe-lU-hz8"/>
-                                <exclude reference="XVd-n0-Wev"/>
-                                <include reference="h4G-En-J4X"/>
-                            </mask>
-                        </variation>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="fOH-oq-uvi" appends="YES" id="6fs-Wb-wzM"/>
                         </connections>
