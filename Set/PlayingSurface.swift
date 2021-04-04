@@ -37,6 +37,13 @@ class PlayingSurface: UIView {
                     cardView.setNeedsDisplay()
                 }
             }
+            else {
+                for i in 0..<subviews.count {
+                    let cardView = subviews[i] as! CardView
+                    cardView.isSelected = false
+                    cardView.setNeedsDisplay()
+                }
+            }
             setNeedsDisplay()
         }
     }
