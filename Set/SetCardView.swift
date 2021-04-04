@@ -13,18 +13,52 @@ class SetCardView: UIView {
     var displayCards: [SetCard] = [SetCard]() {
         didSet {
             setNeedsDisplay()
+            setNeedsLayout()
         }
     }
     
-    class Card {
-        static func draw(_ card: SetCard, in rect: CGRect) {
+    var displayViews: [Card] = [Card]()
+    
+    override func layoutSubviews() {
+        var cardGrid = Grid(layout: Grid.Layout.aspectRatio(5 / 7), frame: bounds)
+        cardGrid.cellCount = displayCards.count
+        
+        if displayViews.count < displayCards.count {
+            for _ in 0..<(displayCards.count - displayViews.count) {
+                let c = Card()
+                c.isOpaque = false
+                displayViews.append(c)
+                addSubview(c)
+            }
+        }
+        else if displayViews.count > displayCards.count {
+            for _ in 0..<(displayViews.count - displayCards.count) {
+                let c = displayViews.removeLast()
+                c.removeFromSuperview()
+            }
+        }
+        
+        for card in 0..<displayCards.count {
+            let gridRect = cardGrid[card] ?? CGRect.zero
+            let cardRect = gridRect.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
             
-            let scale = rect.width / CardGeometry.size.width
+            displayViews[card].display = displayCards[card]
+            displayViews[card].frame = cardRect
+        }
 
-            drawOutline(in: rect)
+    }
+    
+    class Card: UIView {
+        
+        var display = SetCard(number: SetCard.Number.one, symbol: SetCard.Symbol.diamond, shading: SetCard.Shading.open, color: SetCard.Color.green)
+        
+        override func draw(_ rect: CGRect) {
+            let scale = bounds.width / CardGeometry.size.width
+
+            SetCardView.Card.drawOutline(in: rect)
             
             var color: UIColor
-            switch card.color {
+            switch display.color {
             case .red: color = UIColor.red
             case .green: color = UIColor.green
             case .purple: color = UIColor.purple
@@ -32,11 +66,11 @@ class SetCardView: UIView {
             color.setFill()
             color.setStroke()
             
-            let symbolPositions = CardGeometry.getSymbolPositions(card.number.rawValue)
+            let symbolPositions = CardGeometry.getSymbolPositions(display.number.rawValue)
             
             for cursor in symbolPositions {
                 var symbol: UIBezierPath
-                switch card.symbol {
+                switch display.symbol {
                 case .diamond: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.diamondPath)
                 case .oval: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.lozengePath)
                 case .squiggle: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.squigglePath)
@@ -45,7 +79,7 @@ class SetCardView: UIView {
                 symbol.apply(CGAffineTransform(scaleX: scale, y: scale))
                 symbol.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
 
-                drawSymbol(symbol, with: card.shading, scale: scale)
+                SetCardView.Card.drawSymbol(symbol, with: display.shading, scale: scale)
             }
         }
         
@@ -94,14 +128,6 @@ class SetCardView: UIView {
     
     override func draw(_ rect: CGRect) {
         
-        var cardGrid = Grid(layout: Grid.Layout.aspectRatio(5 / 7), frame: bounds)
-        cardGrid.cellCount = displayCards.count
 
-        for card in 0..<displayCards.count {
-            let gridRect = cardGrid[card] ?? CGRect.zero
-            let cardRect = gridRect.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
-            
-            Card.draw(displayCards[card], in: cardRect)
-        }
     }
 }
