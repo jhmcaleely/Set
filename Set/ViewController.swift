@@ -28,6 +28,12 @@ class ViewController: UIViewController {
         updateViewFromModel()
     }
     
+    @IBAction func handleSwipe(_ sender: UISwipeGestureRecognizer) {
+        if sender.state == .ended {
+            game.dealFreshCards(number: 3)
+            updateViewFromModel()
+        }
+    }
     @objc func handleTapCard(_ sender: UITapGestureRecognizer) {
         if sender.state == .ended, let cardview = sender.view as? CardView, let card = cardview.card {
             game.toggleCardSelection(card)
