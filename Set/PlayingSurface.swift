@@ -10,50 +10,57 @@ import UIKit
 
 class PlayingSurface: UIView {
     
+    var target: Any?
+    var action: Selector?
+    
     var displayCards: [SetCard] = [SetCard]() {
         didSet {
-            if oldValue.count < displayCards.count {
-            
-            }
-            else if oldValue.count > displayCards.count {
-                for _ in 0..<(oldValue.count - displayCards.count) {
-                    let c = displayViews.removeLast()
-                    c.removeFromSuperview()
-                }
-            }
             setNeedsLayout()
             setNeedsDisplay()
         }
     }
     
-    func addDisplayCard(_ card: SetCard, target: Any?, action recogniser: Selector?) {
-        if (displayCards.firstIndex(of: card) == nil) {
-            displayCards.append(card)
-            let c = CardView()
-            let recog = UITapGestureRecognizer(target: target, action: recogniser)
-            c.addGestureRecognizer(recog)
-            c.isOpaque = false
-            displayViews.append(c)
-            addSubview(c)
+    var selectedCards: [SetCard]? {
+        didSet {
             setNeedsLayout()
             setNeedsDisplay()
         }
     }
     
-   
-    var displayViews: [CardView] = [CardView]()
-
-    
+    func growOrShrinkCardViews() {
+        if subviews.count < displayCards.count {
+            for _ in 0..<displayCards.count - subviews.count {
+                let c = CardView()
+                let recog = UITapGestureRecognizer(target: target, action: action)
+                c.addGestureRecognizer(recog)
+                c.isOpaque = false
+                addSubview(c)
+            }
+        }
+        else if subviews.count > displayCards.count {
+            for _ in 0..<(subviews.count - displayCards.count) {
+                subviews.last?.removeFromSuperview()
+            }
+        }
+    }
+      
     override func layoutSubviews() {
         var cardGrid = Grid(layout: Grid.Layout.aspectRatio(5 / 7), frame: bounds)
         cardGrid.cellCount = displayCards.count
-        
-        for card in 0..<displayCards.count {
-            let gridRect = cardGrid[card] ?? CGRect.zero
-            let cardRect = gridRect.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+   
+        growOrShrinkCardViews()
+                
+        for i in 0..<displayCards.count {
+            let gridRect = cardGrid[i] ?? CGRect.zero
+            let cardView = subviews[i] as! CardView
             
-            displayViews[card].display = displayCards[card]
-            displayViews[card].frame = cardRect
+            cardView.card = displayCards[i]
+            subviews[i].frame = gridRect
+            
+            if let selection = selectedCards {
+                cardView.isSelected = selection.firstIndex(of: displayCards[i]) != nil
+                cardView.setNeedsDisplay()
+            }
         }
     }
     

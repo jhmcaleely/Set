@@ -99,8 +99,8 @@
                         </variation>
                     </view>
                     <connections>
-                        <outlet property="cards" destination="d6Y-Og-1OQ" id="O7P-OG-hVF"/>
                         <outlet property="dealButton" destination="xHL-2k-42o" id="fUg-i5-wua"/>
+                        <outlet property="playSurface" destination="d6Y-Og-1OQ" id="O7P-OG-hVF"/>
                         <outlet property="scoreLabel" destination="jqb-mS-7cO" id="fYI-cC-5j3"/>
                     </connections>
                 </viewController>

@@ -10,47 +10,58 @@ import UIKit
 
 class CardView: UIView {
     
-    var display = SetCard(number: SetCard.Number.one, symbol: SetCard.Symbol.diamond, shading: SetCard.Shading.open, color: SetCard.Color.green)
+    var card: SetCard?
+    var isSelected = false
     
     override func draw(_ rect: CGRect) {
-        let scale = bounds.width / CardGeometry.size.width
-
-        CardView.drawOutline(in: rect)
-        
-        var color: UIColor
-        switch display.color {
-        case .red: color = UIColor.red
-        case .green: color = UIColor.green
-        case .purple: color = UIColor.purple
-        }
-        color.setFill()
-        color.setStroke()
-        
-        let symbolPositions = CardGeometry.getSymbolPositions(display.number.rawValue)
-        
-        for cursor in symbolPositions {
-            var symbol: UIBezierPath
-            switch display.symbol {
-            case .diamond: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.diamondPath)
-            case .oval: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.lozengePath)
-            case .squiggle: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.squigglePath)
+        if let card = card {
+            
+            let cardRect = bounds.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+            let scale = cardRect.width / CardGeometry.size.width
+            
+            drawOutline(in: cardRect)
+            
+            var color: UIColor
+            switch card.color {
+            case .red: color = UIColor.red
+            case .green: color = UIColor.green
+            case .purple: color = UIColor.purple
             }
-            symbol.apply(CGAffineTransform(translationX: cursor.x, y: cursor.y))
-            symbol.apply(CGAffineTransform(scaleX: scale, y: scale))
-            symbol.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
-
-            CardView.drawSymbol(symbol, with: display.shading, scale: scale)
+            color.setFill()
+            color.setStroke()
+            
+            let symbolPositions = CardGeometry.getSymbolPositions(card.number.rawValue)
+            
+            for cursor in symbolPositions {
+                var symbol: UIBezierPath
+                switch card.symbol {
+                case .diamond: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.diamondPath)
+                case .oval: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.lozengePath)
+                case .squiggle: symbol = UIBezierPath(cgPath: CardGeometry.Symbol.squigglePath)
+                }
+                symbol.apply(CGAffineTransform(translationX: cursor.x, y: cursor.y))
+                symbol.apply(CGAffineTransform(scaleX: scale, y: scale))
+                symbol.apply(CGAffineTransform(translationX: cardRect.origin.x, y: cardRect.origin.y))
+                
+                CardView.drawSymbol(symbol, with: card.shading, scale: scale)
+            }
         }
     }
     
-    static func drawOutline(in rect: CGRect) {
+    func drawOutline(in rect: CGRect) {
         
         let scale = rect.width / CardGeometry.size.width
         let card = UIBezierPath(cgPath: CardGeometry.outlinePath)
         card.apply(CGAffineTransform(scaleX: scale, y: scale))
         card.apply(CGAffineTransform(translationX: rect.origin.x, y: rect.origin.y))
-        card.lineWidth = 1.5 * scale
-        UIColor.darkGray.setStroke()
+        if isSelected {
+            card.lineWidth = 2.5 * scale
+            UIColor.red.setStroke()
+        }
+        else {
+            card.lineWidth = 1.5 * scale
+            UIColor.darkGray.setStroke()
+        }
         UIColor.lightGray.setFill()
         card.stroke()
         card.fill()

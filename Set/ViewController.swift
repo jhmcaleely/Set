@@ -17,18 +17,20 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var dealButton: UIButton!
-    @IBOutlet weak var cards: PlayingSurface!
+    @IBOutlet weak var playSurface: PlayingSurface!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        playSurface.target = self
+        playSurface.action = #selector(handleTapCard(_:))
+
         updateViewFromModel()
     }
     
     @objc func handleTapCard(_ sender: UITapGestureRecognizer) {
-        if sender.state == .ended {
-            let cardview = sender.view as! CardView
-            game.toggleCardSelection(cardview.display)
+        if sender.state == .ended, let cardview = sender.view as? CardView, let card = cardview.card {
+            game.toggleCardSelection(card)
             updateViewFromModel()
         }
     }
@@ -48,10 +50,9 @@ class ViewController: UIViewController {
     }
     
     func updateViewFromModel() {
-             
-        for card in game.dealtCards {
-            cards.addDisplayCard(card, target: self, action: #selector(handleTapCard(_:)))
-        }
+                     
+        playSurface.displayCards = game.dealtCards
+        playSurface.selectedCards = game.selectedCards
         
         if game.isSetSelected() {
             dealButton.setTitle("Deal 3 Replacement Cards", for: UIControl.State.normal)
