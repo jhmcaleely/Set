@@ -16,7 +16,8 @@ class CardView: UIView {
     override func draw(_ rect: CGRect) {
         if let card = card {
             
-            let cardRect = bounds.inset(by: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
+            // remove a 5x7 border
+            let cardRect = bounds.inset(by: UIEdgeInsets(top: 3.5, left: 2.5, bottom: 3.5, right: 2.5))
             let scale = cardRect.width / CardGeometry.size.width
             
             drawOutline(in: cardRect)
